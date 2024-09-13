@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+:root {
+  --bg: #310F48;
+  --color2: #5D1D88;
+  --color3: #FFB700;
+  --color4: #f3dfa0;
+  --color5: #20170E;
+  --color6: #eaeaea;
+  --color7: #f34e26;
+  --color8: #54CC0A;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: var(--bg);
+  color: #fff;
+}
+
+
+
+@media (max-width: 640px) {}
+@media (max-width: 768) {}
+@media (max-width: 1024px) {}
+@media (max-width: 1280px) {}
+@media (max-width: 1536px) {}
+
+/* 
+sm (Small): 640px — Dispositivos pequenos como celulares.
+md (Medium): 768px — Dispositivos médios, como tablets.
+lg (Large): 1024px — Laptops e monitores pequenos.
+xl (Extra Large): 1280px — Monitores grandes e desktops.
+2xl (Double Extra Large): 1536px — Telas muito grandes, como desktops de alta resolução.
+*/

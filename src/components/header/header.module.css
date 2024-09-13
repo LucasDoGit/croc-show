@@ -1,0 +1,60 @@
+.header {
+    width: 100%;
+}
+
+.headerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 32px;
+}
+
+.logoImg {
+    object-fit: cover;
+    margin-right: 12px;
+}
+
+.headerTitle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 3px;
+}
+
+.headerTitle h1 {
+    color: #FFB700;
+    font-size: 64px;
+    letter-spacing: 3px;
+}
+
+.headerTitle strong {
+    color: #fff;
+    font-size: 22px;
+    letter-spacing: 3px;
+    margin-bottom: 4px;
+}
+
+.openingHours {
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    background-color: #54CC0A;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+@media (max-width: 640px){
+    .headerContainer{
+        flex-direction: column;
+    }
+    .logoImg {
+        margin-right: 0;
+    }
+    .headerTitle {
+        align-items: center;
+    }
+    .headerTitle h1 {
+        font-size: 48px;
+    }
+}
