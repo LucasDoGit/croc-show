@@ -1,0 +1,27 @@
+
+.navbar {
+    display: flex;
+    gap: 24px;
+    padding: 16px 0;
+}
+
+.navbar li {
+    list-style: none;
+    background-color: #f3dfa0;
+    padding: 12px 24px;
+    border-radius: 24px;
+    text-align: center;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #20170E;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.navbar li:hover {
+    background-color: #FFB700;
+    transition: all .6s;
+}
