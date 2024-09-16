@@ -3,12 +3,12 @@ import { FaShoppingCart } from "react-icons/fa";
 import styles from "./cart.module.css";
 import { FormEvent, useState } from "react";
 import { IoClose } from "react-icons/io5";
-import { Input } from "@/components/Input";
 import { Item } from "./components/item";
+import { FormAdress } from "./components/FormAdress";
 
 export function Cart() {
     const [showModal, setShowModal] = useState(false);
-    const [step, setStep] = useState(2);
+    const [step, setStep] = useState(1);
 
     function handleOrder(event: FormEvent) {
         event.preventDefault();
@@ -51,41 +51,9 @@ export function Cart() {
                         )}
 
                         {step === 2 && (
-                            <div className={styles.formContainer}>
-                                <div className={styles.inputContainer}>
-                                    <label>Digite seu CEP:</label>
-                                    <Input type="text" placeholder="Digite o seu cep" />
-                                </div>
-                                <div className={styles.groupInput}>
-                                    <div className={styles.inputContainer}>
-                                        <label>Rua/Logradouro</label>
-                                        <Input type="text" placeholder="Rua..." />
-                                    </div>
-                                    <div className={styles.inputContainer}>
-                                        <label>Número</label>
-                                        <Input type="text" placeholder="Número..." />
-                                    </div>
-                                </div>
-                                <div className={styles.groupInput}>
-                                    <div className={styles.inputContainer}>
-                                        <label>Cidade</label>
-                                        <Input type="text" placeholder="Cidade..." />
-                                    </div>
-                                    <div className={styles.inputContainer}>
-                                        <label>Bairro</label>
-                                        <Input type="text" placeholder="Bairro..." />
-                                    </div>
-                                </div>
-                                <div className={styles.inputContainer}>
-                                    <label>Complementos</label>
-                                    <Input type="text" placeholder="Complemento" />
-                                </div>
-                                <div className={styles.inputContainer}>
-                                    <label>Observações</label>
-                                    <textarea placeholder="Observações" />
-                                </div>
-                            </div>
+                            <FormAdress />
                         )}
+                        
                         <p className={styles.cartValue}>
                             Total: <strong>R$ 18,90</strong>
                         </p>
