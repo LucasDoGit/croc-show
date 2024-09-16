@@ -1,18 +1,14 @@
 .footer {
     width: 100%;
+    height: 15vw;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
+    padding-bottom: 55px;
     align-items: center;
 }
 
-.line {
-    border: 0;
-    height: 2px;
-    background: #FFB700;
-    width: 90%;
-    margin: 12px 0;
-}
+
 
 .footerContainer {
     display: flex;
@@ -36,6 +32,15 @@
     font-size: 12px;
 }
 
+.social a {
+    transition: 300ms;
+}
+
+.social a:hover {
+    transform: scale(1.1);
+    transition: 300ms;
+}
+
 .developer {
     padding-top: 28px;
     padding: 8px 0;
@@ -48,5 +53,14 @@
 .developer p {
     font-size: 12px;
     font-weight: 400;
+}
+
+.developer a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.developer a:hover {
+    text-decoration: underline;
 }
 

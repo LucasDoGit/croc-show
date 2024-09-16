@@ -1,0 +1,14 @@
+.input {
+    width: 100%;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.25rem;
+    padding: 8px;
+    margin: 0.25rem 0;
+    outline: none;
+}
+
+.input::placeholder {
+    color: #a5a5a5;
+}
+
+/* w-full border-2 rounded-md h-11 px-2 */

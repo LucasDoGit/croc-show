@@ -1,9 +1,10 @@
 import { Container } from "@/components/Container";
-import { Navbar } from "@/components/navbar";
+import { Navbar } from "@/components/Navbar";
 import styles from './page.module.css'
 import { ProductProps } from "@/utils/types/product";
-import { ProductCard } from "@/components/productCard";
+import { ProductCard } from "@/components/ProductCard";
 import { Footer } from "@/components/Footer";
+import { Cart } from "@/components/Cart";
 
 const pasteis: ProductProps[] = [
   {
@@ -58,8 +59,10 @@ export default function Home() {
           ))}
         </section>
 
+        <hr className={styles.line}/>
         <Footer />
       </Container>
+      <Cart />
     </div>
   );
 }

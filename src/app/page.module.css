@@ -15,6 +15,14 @@
     padding-bottom: 48px;
 }
 
+.line {
+    border: 0;
+    height: 2px;
+    background: #FFB700;
+    width: 90%;
+    margin: 40px auto 12px auto;
+}
+
 @media (max-width: 640px) {
     .menuGrid {
         grid-template-columns: repeat(1, minmax(0, 1fr));

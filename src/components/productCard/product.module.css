@@ -72,10 +72,9 @@
 .button {
     background-color: #FFB700;
     border-radius: 8px;
-    padding: 4px 16px;
+    padding: 2px 16px;
 }
 
 .button:hover {
-    cursor: pointer;
     background-color: #FFB700;
 }

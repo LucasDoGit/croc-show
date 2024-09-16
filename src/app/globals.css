@@ -25,7 +25,14 @@ body {
   background-color: var(--bg);
 }
 
+button:hover {
+  cursor: pointer;
+}
 
+button:active {
+  transform: scale(0.9);
+  transition: 0.1s;
+}
 
 @media (max-width: 640px) {}
 @media (max-width: 768) {}
