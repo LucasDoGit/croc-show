@@ -1,10 +1,10 @@
 .input {
     width: 100%;
+    font-size: 16px;
     border: 2px solid #e5e7eb;
     border-radius: 0.25rem;
     padding: 8px;
     margin: 0.25rem 0;
-    outline: none;
 }
 
 .input::placeholder {
