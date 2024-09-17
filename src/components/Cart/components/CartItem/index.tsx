@@ -2,7 +2,7 @@ import styles from './item.module.css'
 import { MdAddBox } from "react-icons/md";
 import { TbSquareMinusFilled } from "react-icons/tb";
 
-export function Item(){
+export function CartItem(){
     return(
         <div className={styles.item}>
             <div className={styles.itemInfo}>
@@ -12,7 +12,7 @@ export function Item(){
             </div>
             <div className={styles.buttonContainer}>
                 <button>
-                    <MdAddBox size={36} color="#54CC0A" />
+                    <MdAddBox size={34} color="#54CC0A" />
                 </button>
                 <button>
                     <TbSquareMinusFilled size={34} color="#f34e26" />

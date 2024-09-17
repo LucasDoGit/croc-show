@@ -7,7 +7,7 @@ export interface ProductProps {
     image: string;
 }
 
-export interface CartItem {
+export interface CartItemProps {
     id: number;
     name: string;
     price: number;
