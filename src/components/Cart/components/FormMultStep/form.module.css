@@ -1,4 +1,10 @@
-
+.title {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 2rem;
+    text-align: center;
+    margin-bottom: 8px;
+}
 
 .cartItens {
     display: flex;
@@ -53,8 +59,7 @@
     cursor: no-drop;
 }
 
-.formContainer {
-    width: 100%;
+.formContainer, .detailContainer {
     display: flex;
     flex-direction: column;
     gap: 4px;

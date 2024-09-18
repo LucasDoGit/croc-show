@@ -78,3 +78,11 @@
 .button:hover {
     background-color: #FFB700;
 }
+
+@media (max-width: 450px) {
+    .contentContainer {
+        flex-direction: column;
+    }
+}
+
+

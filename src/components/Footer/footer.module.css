@@ -1,6 +1,6 @@
 .footer {
     width: 100%;
-    height: 15vw;
+    height: 20vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -8,13 +8,12 @@
     align-items: center;
 }
 
-
-
 .footerContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 90%;
+    height: 100%;
     margin-bottom: 12px;
 }
 
@@ -62,5 +61,14 @@
 
 .developer a:hover {
     text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+    .footer {
+        height: 25vh;
+    }
+    .footerContainer {
+        flex-direction: column;
+    }
 }
 

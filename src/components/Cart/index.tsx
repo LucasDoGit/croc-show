@@ -21,7 +21,7 @@ export function Cart() {
             </div>
             {showModal && (
                 <div className={styles.modalContainer}>
-                    <div className={styles.formModalContainer}>
+                    <div className={styles.container}>
                         <button
                                     className={styles.closeModal}
                                     onClick={() => setShowModal(!showModal)}
