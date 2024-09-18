@@ -5,6 +5,7 @@ import { ProductProps } from "@/utils/types/product";
 import { ProductCard } from "@/components/ProductCard";
 import { Footer } from "@/components/Footer";
 import { Cart } from "@/components/Cart";
+import { Header } from "@/components/Header";
 
 const pasteis: ProductProps[] = [
   {
@@ -41,6 +42,7 @@ export default function Home() {
   return (
     <div>
       <Container>
+        <Header />
         <Navbar />
 
         <h2 className={styles.menuTitle}>Pasteis</h2>

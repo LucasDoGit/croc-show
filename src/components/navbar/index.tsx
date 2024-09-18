@@ -10,9 +10,9 @@ export function Navbar(){
             <li>
                 <Link href="/">COXINHAS</Link>
             </li>
-            <li>
+            {/* <li>
                 <Link href="/">BEBIDAS</Link>
-            </li>
+            </li> */}
         </nav>
     )
 }

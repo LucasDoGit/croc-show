@@ -16,6 +16,7 @@
 
 .headerTitle {
     display: flex;
+    font-family: var(--font-bebas), sans-serif;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
@@ -30,6 +31,8 @@
 
 .headerTitle strong {
     color: #fff;
+    font-family: var(--font-roboto-slab), sans-serif;
+    font-weight: 400;
     font-size: 22px;
     letter-spacing: 3px;
     margin-bottom: 4px;

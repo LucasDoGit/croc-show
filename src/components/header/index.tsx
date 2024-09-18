@@ -2,7 +2,7 @@ import Image from "next/image"
 import logoImg from '../../../public/logo-v1.png'
 import Link from "next/link"
 import styles from './header.module.css'
-import { bebasNeue } from "@/app/fonts"
+import { bebasNeue, robotoSlab } from "@/app/fonts"
 
 export function Header() {
     return (
@@ -21,7 +21,7 @@ export function Header() {
                 </Link>
                 <div className={styles.headerTitle}>
                     <h1 className={bebasNeue.className}>Lanches</h1>
-                    <strong className={bebasNeue.className}>Delivery para toda curitiba</strong>
+                    <strong className={robotoSlab.className}>Delivery para toda curitiba</strong>
                     <span className={styles.openingHours}>Seg á Dom - 18:00 as 01:30</span>
                 </div>
             </div>
