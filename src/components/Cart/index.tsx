@@ -2,8 +2,7 @@
 import { FaShoppingCart } from "react-icons/fa";
 import styles from "./cart.module.css";
 import { useState } from "react";
-import { IoClose } from "react-icons/io5";
-import { FormMultStep } from "./components/FormMultStep";
+import { CheckoutModal } from "./components/CheckoutModal";
 
 export function Cart() {
     const [showModal, setShowModal] = useState(false);
@@ -21,15 +20,7 @@ export function Cart() {
             </div>
             {showModal && (
                 <div className={styles.modalContainer}>
-                    <div className={styles.container}>
-                        <button
-                                    className={styles.closeModal}
-                                    onClick={() => setShowModal(!showModal)}
-                                >
-                                    <IoClose size={28} color="#000" />
-                        </button>
-                        <FormMultStep />
-                    </div>
+                    <CheckoutModal onClose={() => setShowModal(false)}/>
                 </div>
             )}
         </>

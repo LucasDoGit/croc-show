@@ -38,7 +38,7 @@
 
 .right h2 {
     max-width: 500px;
-    font-size: 38px;
+    font-size: 28px;
     color: #fff;
     margin-bottom: 18px;
 }
@@ -51,7 +51,7 @@
 
 .imageLogin {
     width: 100%;
-    max-width: 300px;
+    max-width: 250px;
     height: auto;
     margin-bottom: 18px;
 }
@@ -75,7 +75,6 @@
 
 @media (max-width: 500px){
     .imageLogin {
-        max-width: 360px;
         width: 85%;
     }
 
