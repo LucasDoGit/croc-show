@@ -119,7 +119,7 @@ export function FormMultStep() {
                 <div className={styles.formContainer}>
                     <div className={styles.inputContainer}>
                         <label>Digite seu CEP:</label>
-                        <Input type="text"
+                        <input type="text"
                             placeholder="Digite o seu cep"
                             value={cep}
                             onChange={(e) => setCep(e.target.value)}
@@ -130,7 +130,7 @@ export function FormMultStep() {
                     <div className={styles.groupInput}>
                         <div className={styles.inputContainer}>
                             <label>Rua/Logradouro</label>
-                            <Input
+                            <input
                                 type="text"
                                 placeholder="Rua..."
                                 name="name"
@@ -141,7 +141,7 @@ export function FormMultStep() {
                         </div>
                         <div className={styles.inputContainer}>
                             <label>Número</label>
-                            <Input
+                            <input
                                 type="text"
                                 placeholder="Número..."
                                 value={numero}
@@ -153,7 +153,7 @@ export function FormMultStep() {
                     <div className={styles.groupInput}>
                         <div className={styles.inputContainer}>
                             <label>Cidade</label>
-                            <Input
+                            <input
                                 type="text"
                                 placeholder="Cidade..."
                                 value={localidade}
@@ -163,7 +163,7 @@ export function FormMultStep() {
                         </div>
                         <div className={styles.inputContainer}>
                             <label>Bairro</label>
-                            <Input
+                            <input
                                 type="text"
                                 placeholder="Bairro..."
                                 value={bairro}
@@ -174,7 +174,7 @@ export function FormMultStep() {
                     </div>
                     <div className={styles.inputContainer}>
                         <label>Complementos</label>
-                        <Input
+                        <input
                             type="text"
                             placeholder="Complemento"
                             value={complemento}

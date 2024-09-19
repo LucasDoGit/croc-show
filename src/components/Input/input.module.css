@@ -11,4 +11,9 @@
     color: #a5a5a5;
 }
 
-/* w-full border-2 rounded-md h-11 px-2 */
+.error {
+    font-family: 'Roboto', sans-serif;
+    margin: 0 4px;
+    color: #f34e26;
+    font-size: 14px;
+}
