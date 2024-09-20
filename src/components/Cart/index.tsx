@@ -7,7 +7,7 @@ import { CartContext } from "@/context/cartContext";
 
 export function Cart() {
     const [showModal, setShowModal] = useState(false);
-    const { cart } = useContext(CartContext)
+    const { cart } = useContext(CartContext);
 
     return (
         <>

@@ -90,7 +90,6 @@ export function CheckoutModal({ onClose }: CheckoutModalProps) {
         return (
             <div className={styles.modal}>
                 <div className={styles.header}>
-                    <h1>Meu carrinho</h1>
                     <button
                         className={styles.btnCloseModal}
                         onClick={onClose}
@@ -100,7 +99,7 @@ export function CheckoutModal({ onClose }: CheckoutModalProps) {
                 </div>
                 <div className={styles.cartEmpty}>
                     <strong>Ops! seu carrinho está vázio</strong>
-                    <p>Adicione deliciosos pasteis ao seu carrinho! 😊</p>
+                    <p>Adicione deliciosos pasteis ao seu carrinho!😊</p>
                 </div>
             </div>
         )
@@ -158,7 +157,7 @@ export function CheckoutModal({ onClose }: CheckoutModalProps) {
                                 maxLength={8}
                             />
                         </div>
-                        <div className={styles.groupInput}>
+                        <div className={styles.groupInput_2}>
                             <div className={styles.inputContainer}>
                                 <label>Rua/Logradouro</label>
                                 <Input

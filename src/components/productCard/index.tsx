@@ -1,12 +1,14 @@
 "use client"
-import Image from 'next/image'
+import { useContext } from 'react';
 import styles from './product.module.css'
-import { ProductProps } from '@/utils/types/product';
+import Image from 'next/image'
 import { FaCartShopping } from "react-icons/fa6";
+import toast from 'react-hot-toast';
+
 import { bebasNeue, robotoSlab } from '@/app/fonts';
 import { CartContext } from '@/context/cartContext';
-import { useContext } from 'react';
 import { priceToBrl } from '@/utils/functions/product';
+import { ProductProps } from '@/utils/types/product';
 
 interface ProductCartProps {
     data: ProductProps
@@ -17,6 +19,7 @@ export function ProductCard({data}: ProductCartProps) {
 
     function handleAddCartItem(product: ProductProps) {
         addToCart(product)
+        toast.success("Produto adicionado no carrinho")
     }
 
     return (

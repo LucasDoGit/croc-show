@@ -1,10 +1,15 @@
 "use client"
-import styles from './formlogin.module.css'
-import { Input } from '@/components/Input'
+import styles from './formlogin.module.css';
+import { Input } from '@/components/Input';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation'
 
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/services/firebaseConnection';
 
 const loginUserSchema = z.object({
     email: z.string().email("Insira um email válido").min(1, "O campo e-mail é obrigatório"),
@@ -14,25 +19,24 @@ const loginUserSchema = z.object({
 type LoginUserSchema = z.infer<typeof loginUserSchema>
 
 export function FormLogin() {
+    const router = useRouter()
 
     const { register, handleSubmit, formState: { errors }, } = useForm<LoginUserSchema>({
         resolver: zodResolver(loginUserSchema),
         mode: "onChange"
     })
 
-    function onSubmit(data: LoginUserSchema) {
-        console.log(data)
+    async function onSubmit(data: LoginUserSchema) {
         
-        // signInWithEmailAndPassword(auth, data.email, data.password)
-        //     .then((user) => {
-        //         console.log(user)
-        //         toast.success("Logado com sucesso!")
-        //         navigate("/", { replace: true })
-        //     })
-        //     .catch((error) => {
-        //         console.log("Erro ao fazer login", error);
-        //         toast.error("Erro ao fazer login");
-        //     })
+        signInWithEmailAndPassword(auth, data.email, data.password)
+            .then((user) => {
+                toast.loading("Logado com sucesso, redirecionado...", {duration: 4000})
+                router.push("/")
+            })
+            .catch((error) => {
+                console.log("Erro ao fazer login", error);
+                toast.error("Erro ao fazer login");
+            })
     }
 
     return (
