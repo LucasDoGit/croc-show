@@ -1,3 +1,17 @@
+.cartEmpty {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 12px 0;
+    height: 150px;
+}
+
+.cartEmpty strong {
+    font-size: 25px;
+    margin-bottom: 8px;
+}
+
 .modal {
     display: flex;
     flex-direction: column;
@@ -21,6 +35,14 @@
     background-color: transparent;
     right: 0;
     top: 0;
+}
+
+.valueTotal {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    margin-bottom: 12px;
+    font-size: 18px;
 }
 
 .listProducts {

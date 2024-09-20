@@ -56,18 +56,13 @@
     justify-content: space-between;
 }
 
-.valueContainer p {
-    font-size: 12px;
-    font-weight: 500;
+.value {
+    font-size: 18px;
     background-color: #FFB700;
+    font-weight: 500;
     border-radius: 8px;
     color: #20170E;
     padding: 4px 16px;
-}
-
-.value {
-    font-size: 18px;
-    font-weight: 500;
 }
 
 .button {

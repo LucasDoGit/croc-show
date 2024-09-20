@@ -21,6 +21,10 @@
     font-weight: bold;
 }
 
+.itemValue strong {
+    font-size: 12px;
+}
+
 .buttonContainer {
     display: flex;
     justify-content: center;

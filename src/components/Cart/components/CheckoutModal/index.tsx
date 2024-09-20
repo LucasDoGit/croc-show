@@ -1,6 +1,6 @@
 "use client"
 import styles from './checkoutmodal.module.css'
-import { useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 
 import { CartItem } from '../CartItem';
@@ -10,6 +10,8 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DataProps } from '@/utils/types/address';
+
+import { CartContext } from '@/context/cartContext';
 
 interface CheckoutModalProps {
     onClose: () => void;
@@ -29,6 +31,7 @@ type AddressSchema = z.infer<typeof addressSchema>
 
 export function CheckoutModal({ onClose }: CheckoutModalProps) {
     const [step, setStep] = useState(0);
+    const { total, cart } = useContext(CartContext)
 
     const { register, handleSubmit, setValue, formState: { errors }, } = useForm<AddressSchema>({
         resolver: zodResolver(addressSchema),
@@ -40,20 +43,20 @@ export function CheckoutModal({ onClose }: CheckoutModalProps) {
         setStep(2)
     }
 
-    async function handleCepCodeChange(e: React.ChangeEvent<HTMLInputElement>){
-        const cep = e.target.value
+    async function handleCepCodeChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const cep = e.target.value;
 
-        if(cep.length === 8){
+        if (cep.length === 8) {
             try {
                 const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`)
                 const data: DataProps = await res.json();
-    
+
                 if (data.erro) {
                     console.log(data.erro)
                 } else {
                     setValue("logradouro", data.logradouro)
-                    setValue("bairro", data.bairro)    
-                    setValue("localidade", data.localidade)        
+                    setValue("bairro", data.bairro)
+                    setValue("localidade", data.localidade)
                 }
             } catch (error) {
                 console.log("failed to fetch data ", error)
@@ -68,6 +71,26 @@ export function CheckoutModal({ onClose }: CheckoutModalProps) {
         window.open(`https://wa.me/${phone}?text=Observações: ${message} Endereco: ${""}`, "_black")
     }
 
+    if (cart.length === 0) {
+        return (
+            <div className={styles.modal}>
+                <div className={styles.header}>
+                    <h1>Meu carrinho</h1>
+                    <button
+                        className={styles.btnCloseModal}
+                        onClick={onClose}
+                    >
+                        <IoClose size={28} color="#000" />
+                    </button>
+                </div>
+                <div className={styles.cartEmpty}>
+                    <strong>Ops! seu carrinho está vázio</strong>
+                    <p>Adicione delicisos pasteis ao seu carrinho! 😊</p>
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div className={styles.modal}>
             <div className={styles.header}>
@@ -80,9 +103,20 @@ export function CheckoutModal({ onClose }: CheckoutModalProps) {
                 </button>
             </div>
 
+
+
             {step === 0 && (
                 <div className={styles.listProducts}>
-                    <CartItem />
+                    
+                    {
+                        cart.map((item) => (
+                            <CartItem data={item} />
+                        ))
+                    }
+
+                    <div className={styles.valueTotal}>
+                        <p>Total: <strong>{total}</strong></p>
+                    </div>
                     <div className={styles.btnListProducts}>
                         <button
                             className={styles.buttonNext}
@@ -196,6 +230,9 @@ export function CheckoutModal({ onClose }: CheckoutModalProps) {
                     <div>
                         <p><strong>Endereço de entrega: </strong></p>
                         <p><strong>Observações: </strong></p>
+                    </div>
+                    <div className={styles.valueTotal}>
+                        <p>Total: <strong>{total}</strong></p>
                     </div>
                     <div className={styles.containerButtons}>
                         <button
