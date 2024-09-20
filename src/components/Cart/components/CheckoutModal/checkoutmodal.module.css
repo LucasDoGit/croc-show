@@ -112,6 +112,36 @@
     min-height: 120px;
 }
 
+.orderContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.orderContainer h2 {
+    margin-top: 12px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.orderContainer hr {
+    border: 0;
+    height: 1px;
+    background: #000;
+    width: 100%;
+    margin: 12px 0;
+}
+
+.orderInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.orderItem {
+    width: 100%;
+    margin-bottom: 8px;
+}
+
 .formContainer textarea::placeholder {
     color: #a5a5a5;
 }

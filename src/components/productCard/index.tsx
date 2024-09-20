@@ -6,6 +6,7 @@ import { FaCartShopping } from "react-icons/fa6";
 import { bebasNeue, robotoSlab } from '@/app/fonts';
 import { CartContext } from '@/context/cartContext';
 import { useContext } from 'react';
+import { priceToBrl } from '@/utils/functions/product';
 
 interface ProductCartProps {
     data: ProductProps
@@ -39,10 +40,7 @@ export function ProductCard({data}: ProductCartProps) {
                     
                     <div className={styles.valueContainer}>
                         <strong className={styles.value}>
-                            {data.price.toLocaleString("pt-BR", {
-                                style: 'currency',
-                                currency: 'BRL'
-                            })}
+                            {priceToBrl(data.price)}
                         </strong>
                         <button 
                             className={styles.button}

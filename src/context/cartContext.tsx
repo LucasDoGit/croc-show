@@ -1,6 +1,7 @@
 "use client"
 import { ReactNode, createContext, useState } from 'react'
 import { CartProps, ProductProps } from '@/utils/types/product';
+import { priceToBrl } from '@/utils/functions/product';
 
 interface CartProviderProps {
     children: ReactNode;
@@ -68,7 +69,7 @@ function CartProvider({ children }: CartProviderProps) {
         let myCart = items;
         let result = myCart.reduce((acc, obj) => { return acc + obj.total }, 0);
 
-        const resultFormated = result.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
+        const resultFormated = priceToBrl(result)
         setTotal(resultFormated)
     }
 

@@ -8,17 +8,13 @@
 .itemName {
     text-transform: capitalize;
     letter-spacing: 2px;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .itemInfo {
     display: flex;
     flex-direction: column;
     gap: 8px;
-}
-
-.itemValue {
-    font-weight: bold;
 }
 
 .itemValue strong {

@@ -12,6 +12,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { DataProps } from '@/utils/types/address';
 
 import { CartContext } from '@/context/cartContext';
+import { priceToBrl } from '@/utils/functions/product';
 
 interface CheckoutModalProps {
     onClose: () => void;
@@ -31,15 +32,18 @@ type AddressSchema = z.infer<typeof addressSchema>
 
 export function CheckoutModal({ onClose }: CheckoutModalProps) {
     const [step, setStep] = useState(0);
-    const { total, cart } = useContext(CartContext)
+    const [address, setAddress] = useState("")
+    const { total, cart, clearCart } = useContext(CartContext)
 
-    const { register, handleSubmit, setValue, formState: { errors }, } = useForm<AddressSchema>({
+    const { register, handleSubmit, setValue, getValues, formState: { errors }, } = useForm<AddressSchema>({
         resolver: zodResolver(addressSchema),
         mode: "onChange"
     })
 
     function onSubmit(data: AddressSchema) {
-        console.log(data)
+        setAddress(
+            `${data.logradouro}, ${data.numero} - ${data.bairro}, ${data.localidade}`
+        )
         setStep(2)
     }
 
@@ -65,10 +69,21 @@ export function CheckoutModal({ onClose }: CheckoutModalProps) {
     }
 
     function checkoutOrder() {
-        const message = encodeURIComponent("")
+
+        const cartItems = cart.map((item) => {
+            return(
+                `${item.name}, Quantidade: ${item.quantity} (${priceToBrl(item.total)})`
+            )
+        }).join(" ")
+        
+        const message = encodeURIComponent(cartItems)
         const phone = "41996546683"
 
-        window.open(`https://wa.me/${phone}?text=Observações: ${message} Endereco: ${""}`, "_black")
+        window.open(`https://wa.me/${phone}?text=Novo pedido: ${message} Endereco: ${address} Observações: ${getValues('observacoes')}`, "_black")
+        
+        setStep(0)
+        clearCart()
+        onClose()
     }
 
     if (cart.length === 0) {
@@ -85,7 +100,7 @@ export function CheckoutModal({ onClose }: CheckoutModalProps) {
                 </div>
                 <div className={styles.cartEmpty}>
                     <strong>Ops! seu carrinho está vázio</strong>
-                    <p>Adicione delicisos pasteis ao seu carrinho! 😊</p>
+                    <p>Adicione deliciosos pasteis ao seu carrinho! 😊</p>
                 </div>
             </div>
         )
@@ -224,12 +239,21 @@ export function CheckoutModal({ onClose }: CheckoutModalProps) {
 
 
             {step === 2 && (
-                <div className={styles.detailContainer}>
-                    <h2>Confirme o seu pedido</h2>
-                    <p>item 1</p>
-                    <div>
-                        <p><strong>Endereço de entrega: </strong></p>
-                        <p><strong>Observações: </strong></p>
+                <div className={styles.orderContainer}>
+                    <h2>Confirme o seu pedido:</h2>
+                    <hr />
+                    {cart.map((item) => (
+                        <div 
+                            className={styles.orderItem}
+                            key={item.id}
+                        >
+                            <p>{`x${item.quantity} ${item.name} (${priceToBrl(item.price)}) - ${priceToBrl(item.total)}`}</p>
+                        </div>
+                    ))}
+                    <hr />
+                    <div className={styles.orderInfo}>
+                        <p><strong>Endereço de entrega: </strong>{address}</p>
+                        <p><strong>Observações: </strong>{getValues('observacoes')}</p>
                     </div>
                     <div className={styles.valueTotal}>
                         <p>Total: <strong>{total}</strong></p>
@@ -242,7 +266,7 @@ export function CheckoutModal({ onClose }: CheckoutModalProps) {
                             Voltar
                         </button>
                         <button
-                            onClick={() => setStep(0)}
+                            onClick={checkoutOrder}
                             className={styles.buttonNext}
                         >
                             Avançar

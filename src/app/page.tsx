@@ -1,11 +1,13 @@
-import { Container } from "@/components/Container";
-import { Navbar } from "@/components/navbar";
 import styles from './page.module.css'
-import { ProductProps } from "@/utils/types/product";
-import { ProductCard } from "@/components/productCard";
+
+import { Container } from "@/components/Container";
+import { Navbar } from "@/components/Navbar";
+import { ProductCard } from "@/components/ProductCard";
 import { Footer } from "@/components/Footer";
 import { Cart } from "@/components/Cart";
-import { Header } from "@/components/header";
+import { Header } from "@/components/Header";
+
+import { ProductProps } from "@/utils/types/product";
 
 const pasteis: ProductProps[] = [
   {

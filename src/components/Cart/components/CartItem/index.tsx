@@ -6,6 +6,7 @@ import { TbSquareMinusFilled } from "react-icons/tb";
 
 import { CartContext } from '@/context/cartContext';
 import { useContext } from 'react';
+import { priceToBrl } from '@/utils/functions/product';
 
 interface CartItemProps {
     data: CartProps
@@ -20,10 +21,7 @@ export function CartItem({data}: CartItemProps){
                 <p className={styles.itemName}>{data.name}</p>
                 <p>Quantidade: {data.quantity}</p>
                 <p className={styles.itemValue}>
-                    {data.price.toLocaleString("pt-BR", {
-                        style: 'currency',
-                        currency: "BRL"
-                    })}
+                    {priceToBrl(data.price)}
                     <strong> (un)</strong>
                 </p>
             </div>
