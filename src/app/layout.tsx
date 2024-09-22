@@ -1,14 +1,26 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import CartProvider from "@/context/cartContext";
+import AuthProvider from "@/context/AuthContext";
 import { Toaster } from 'react-hot-toast';
 
+
 export const metadata: Metadata = {
-  title: "Croc Show - Pastelaria e Salgados para toda Curitiba",
+  title: "Croc Show - Pastelaria e lanches para toda Curitiba",
   description: "Pastéis e lanches servidos com muita qualidade e crocancia para toda Curitiba.",
+  icons: {
+      icon: [
+        '/assets/favicon.ico',
+      ],
+      apple: [
+        '/assets/apple-touch-icon.png'
+      ],
+      shortcut: [
+        '/assets/apple-touch-icon.png'
+      ]
+    },
+  manifest: '/site.webmanifest'
 };
-
-
 
 export default function RootLayout({
   children,
@@ -23,7 +35,9 @@ export default function RootLayout({
           reverseOrder={false}
         />
         <CartProvider>
-          {children}
+          <AuthProvider>
+            {children}
+          </AuthProvider>
         </CartProvider>
       </body>
     </html>

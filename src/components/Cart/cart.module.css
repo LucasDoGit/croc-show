@@ -9,6 +9,42 @@
     bottom: 0;
 }
 
+.admin_container {
+    width: 100%;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+}
+
+.admin_container a {
+    text-decoration: none;
+}
+
+.admin_title {
+    color: #f34e26 !important;
+    font-weight: 600;
+    letter-spacing: 3px;
+}
+
+.btn_logout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    transition: 300ms;
+    padding: 3px 12px;
+}
+
+.btn_logout:active {
+    transform: scale(0.9);
+    transition: 300ms;
+}
+
 .openCart {
     display: flex;
     justify-content: center;
