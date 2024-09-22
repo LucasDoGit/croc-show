@@ -1,5 +1,5 @@
 "use client"
-import { CartProps } from '@/utils/types/product';
+import { CartProps } from '@/utils/types/Product';
 import styles from './item.module.css'
 import { MdAddBox } from "react-icons/md";
 import { TbSquareMinusFilled } from "react-icons/tb";

@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 import { bebasNeue, robotoSlab } from '@/app/fonts';
 import { CartContext } from '@/context/cartContext';
 import { priceToBrl } from '@/utils/functions/product';
-import { ProductProps } from '@/utils/types/product';
+import { ProductProps } from '@/utils/types/Product';
 
 interface ProductCartProps {
     data: ProductProps

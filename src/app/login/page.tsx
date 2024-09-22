@@ -1,5 +1,4 @@
 import Image from "next/image";
-import imageLogin from '../../../public/homem-cozinhando.png'
 import styles from './login.module.css'
 import { Metadata } from "next";
 import { FormLogin } from "./components/FormLogin";
@@ -20,7 +19,9 @@ export default function Login(){
             <section className={styles.right}>
                 <Image 
                     className={styles.imageLogin}
-                    src={imageLogin}
+                    width={250}
+                    height={250}
+                    src="/assets/homem-cozinhando.png"
                     quality={100}
                     alt="Homem cozinhando"
                 />

@@ -7,7 +7,7 @@ import { Footer } from "@/components/Footer";
 import { Cart } from "@/components/Cart";
 import { Header } from "@/components/Header";
 
-import { ProductProps } from "@/utils/types/product";
+import { ProductProps } from "@/utils/types/Product";
 
 const pasteis: ProductProps[] = [
   {

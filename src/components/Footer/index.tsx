@@ -1,5 +1,4 @@
 import styles from "./footer.module.css";
-import logoImg from "../../../public/logo-v2.png";
 import Image from "next/image";
 import { FaFacebookSquare } from "react-icons/fa";
 import { FaSquareInstagram } from "react-icons/fa6";
@@ -11,7 +10,7 @@ export function Footer() {
             <div className={styles.footerContainer}>
                 <Image
                     className={styles.logoImg}
-                    src={logoImg}
+                    src="/assets/logo-v2.png"
                     width={120}
                     height={43}
                     priority={true}

@@ -1,6 +1,6 @@
 "use client"
 import { ReactNode, createContext, useState } from 'react'
-import { CartProps, ProductProps } from '@/utils/types/product';
+import { CartProps, ProductProps } from '@/utils/types/Product';
 import { priceToBrl } from '@/utils/functions/product';
 
 interface CartProviderProps {

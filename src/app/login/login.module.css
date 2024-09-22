@@ -50,9 +50,6 @@
 }
 
 .imageLogin {
-    width: 100%;
-    max-width: 250px;
-    height: auto;
     margin-bottom: 18px;
 }
 
@@ -74,10 +71,6 @@
 }
 
 @media (max-width: 500px){
-    .imageLogin {
-        width: 85%;
-    }
-
     .right h2 {
         max-width: 360px;
         font-size: 32px;
