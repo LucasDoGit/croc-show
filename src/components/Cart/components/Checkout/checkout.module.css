@@ -16,12 +16,11 @@
 .modal {
     display: flex;
     flex-direction: column;
+    width: 100%;
     background-color: #fff;
-    max-width: 600px;
-    width: 95%;
+    color: #20170E;
     padding: 1.25rem;
     border-radius: 4px;
-    color: #20170E;
 }
 
 .header {
@@ -64,11 +63,6 @@
     font-weight: bold;
     transition: .3s;
     color: #fff;
-}
-
-.buttonNext:hover, .buttonPrev:hover {
-    transform: scale(1.1);
-    transition: .3s;
 }
 
 .buttonNext {

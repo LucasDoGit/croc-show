@@ -1,5 +1,5 @@
 "use client"
-import styles from './checkoutmodal.module.css'
+import styles from './checkout.module.css'
 import { useContext, useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 
@@ -15,7 +15,7 @@ import { CartContext } from '@/context/cartContext';
 import { priceToBrl } from '@/utils/functions/product';
 import toast from 'react-hot-toast';
 
-interface CheckoutModalProps {
+interface CheckoutProps {
     onClose: () => void;
 }
 
@@ -31,7 +31,7 @@ const addressSchema = z.object({
 
 type AddressSchema = z.infer<typeof addressSchema>
 
-export function CheckoutModal({ onClose }: CheckoutModalProps) {
+export function Checkout({ onClose }: CheckoutProps) {
     const [step, setStep] = useState(0);
     const [address, setAddress] = useState("")
     const { total, cart, clearCart } = useContext(CartContext)
@@ -132,15 +132,14 @@ return (
         {step === 0 && (
             <div className={styles.listProducts}>
 
-                {
-                    cart.map((item) => (
-                        <CartItem data={item} />
-                    ))
-                }
+                {cart.map((item) => (
+                        <CartItem key={item.id} data={item} />
+                ))}
 
                 <div className={styles.valueTotal}>
                     <p>Total: <strong>{total}</strong></p>
                 </div>
+
                 <div className={styles.btnListProducts}>
                     <button
                         className={styles.buttonNext}
@@ -149,6 +148,7 @@ return (
                         Avançar
                     </button>
                 </div>
+                
             </div>
         )}
 

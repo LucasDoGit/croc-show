@@ -1,4 +1,5 @@
 import styles from './page.module.css'
+import Link from 'next/link';
 
 import { Container } from "@/components/Container";
 import { Navbar } from "@/components/Navbar";
@@ -8,6 +9,8 @@ import { Cart } from "@/components/Cart";
 import { Header } from "@/components/Header";
 
 import { ProductProps } from "@/utils/types/Product";
+import { IoAddCircle } from 'react-icons/io5';
+
 
 const pasteis: ProductProps[] = [
   {
@@ -53,6 +56,9 @@ export default function Home() {
           {pasteis.map((item) => (
             <ProductCard data={item} key={item.id}/>
           ))}
+          <Link href="/product/newItem">
+            <IoAddCircle size={28} color="#FFB700"/>
+          </Link>
         </section>
 
         <h2 className={styles.menuTitle}>Drinks</h2>
@@ -61,6 +67,9 @@ export default function Home() {
           {pasteis.map((item) => (
             <ProductCard data={item} key={item.id}/>
           ))}
+          <Link href="/product/newItem">
+            <IoAddCircle size={28} color="#FFB700"/>
+          </Link>
         </section>
 
         <hr className={styles.line}/>

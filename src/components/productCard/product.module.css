@@ -75,6 +75,11 @@
     background-color: #FFB700;
 }
 
+.containerButtons {
+    display: flex;
+    gap: 6px;
+}
+
 @media (max-width: 450px) {
     .contentContainer {
         flex-direction: column;

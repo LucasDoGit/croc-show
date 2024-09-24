@@ -32,12 +32,12 @@
 }
 
 .social a {
-    transition: 300ms;
+    transition: .3s;
 }
 
 .social a:hover {
     transform: scale(1.1);
-    transition: 300ms;
+    transition: .3s;
 }
 
 .developer {

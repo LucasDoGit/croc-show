@@ -32,7 +32,3 @@
     background-color: transparent;
     transition: .3s;
 }
-
-.buttonContainer button:hover {
-    transform: scale(1.1);
-}

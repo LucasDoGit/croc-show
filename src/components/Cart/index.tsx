@@ -5,12 +5,12 @@ import styles from "./cart.module.css";
 import { FaShoppingCart } from "react-icons/fa";
 import { FiLogIn } from "react-icons/fi"
 
-import { CheckoutModal } from "./components/CheckoutModal";
+import { Checkout } from "./components/Checkout";
 import { CartContext } from "@/context/cartContext";
 import { AuthContext } from "@/context/AuthContext"
+import { Modal } from "../Modal";
 
 export function Cart() {
-
     const { signed } = useContext(AuthContext);
     const [showModal, setShowModal] = useState(false);
     const { cartQuantity } = useContext(CartContext);
@@ -42,11 +42,12 @@ export function Cart() {
                     <FaShoppingCart size={24} color="#fff" />
                 </button>
             </div>
-            {showModal && (
-                <div className={styles.modalContainer}>
-                    <CheckoutModal onClose={() => setShowModal(false)} />
-                </div>
-            )}
+            <Modal
+                    isOpen={showModal}
+                    onClose={() => setShowModal(false)}
+            >
+                <Checkout onClose={() => setShowModal(false)} />
+            </Modal>
         </>
     );
 }

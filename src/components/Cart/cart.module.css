@@ -36,13 +36,8 @@
     color: #fff;
     border: 1px solid #fff;
     border-radius: 4px;
-    transition: 300ms;
+    transition: .3s;
     padding: 3px 12px;
-}
-
-.btn_logout:active {
-    transform: scale(0.9);
-    transition: 300ms;
 }
 
 .openCart {
@@ -60,35 +55,6 @@
     font-weight: 600;
     line-height: 150%;
     margin-right: 8px;
-}
-
-.modalContainer {
-    display: flex;
-    position: fixed;
-    background-color: rgb(0 0 0 / 0.6);
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    z-index: 99;
-    top: 0px;
-    left: 0px;
-}
-
-.container {
-    position: relative;
-    background-color: #fff;
-    min-width: 600px;
-    padding: 1.25rem;
-    border-radius: 4px;
-    color: #20170E;
-}
-
-.closeModal {
-    position: absolute;
-    background-color: transparent;
-    right: 20px;
-    top: 20px;
 }
 
 @media (max-width: 640px) {

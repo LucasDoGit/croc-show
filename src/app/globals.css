@@ -30,7 +30,7 @@ button:hover {
 
 button:active {
   transform: scale(0.9);
-  transition: 0.1s;
+  transition: .3s;
 }
 
 @media (max-width: 640px) {}

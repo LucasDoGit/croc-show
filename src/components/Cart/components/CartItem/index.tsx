@@ -34,7 +34,7 @@ export function CartItem({data}: CartItemProps){
                 <button
                     onClick={() => removeFromCart(data)}
                 >
-                    <TbSquareMinusFilled size={34} color="#f34e26" />
+                    <TbSquareMinusFilled size={31} color="#f34e26" />
                 </button>
             </div>
         </div>
