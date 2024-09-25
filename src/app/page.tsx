@@ -1,15 +1,23 @@
 import styles from './page.module.css'
-import Link from 'next/link';
 
 import { Container } from "@/components/Container";
 import { Navbar } from "@/components/Navbar";
-import { ProductCard } from "@/components/ProductCard";
 import { Footer } from "@/components/Footer";
 import { Cart } from "@/components/Cart";
 import { Header } from "@/components/Header";
+import { ProductList } from '@/components/ProductList';
+import { CategoriesProps, ProductProps } from "@/utils/types/Product";
 
-import { ProductProps } from "@/utils/types/Product";
-import { IoAddCircle } from 'react-icons/io5';
+const getCategories = async () => {
+  try {
+    const response = await fetch('http://localhost:3000/api/categories', {next: { revalidate: 320 }});
+    
+    return response.json()
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to fetch data");
+  }
+};
 
 
 const pasteis: ProductProps[] = [
@@ -43,7 +51,9 @@ const pasteis: ProductProps[] = [
   }
 ];
 
-export default function Home() {
+export default async function Home() {
+  const categories: CategoriesProps[] = await getCategories();
+
   return (
     <div>
       <Container>
@@ -51,26 +61,14 @@ export default function Home() {
         <Navbar />
 
         <h2 className={styles.menuTitle}>Pasteis</h2>
+        <ProductList products={pasteis} />
 
-        <section className={styles.menuGrid}>
-          {pasteis.map((item) => (
-            <ProductCard data={item} key={item.id}/>
-          ))}
-          <Link href="/product/newItem">
-            <IoAddCircle size={28} color="#FFB700"/>
-          </Link>
-        </section>
+        {/* {categories.map((item) => (
+          <p>{item.name}</p>
+        ))} */}
 
         <h2 className={styles.menuTitle}>Drinks</h2>
-
-        <section className={styles.menuGrid}>
-          {pasteis.map((item) => (
-            <ProductCard data={item} key={item.id}/>
-          ))}
-          <Link href="/product/newItem">
-            <IoAddCircle size={28} color="#FFB700"/>
-          </Link>
-        </section>
+        <ProductList products={pasteis} />
 
         <hr className={styles.line}/>
         <Footer />

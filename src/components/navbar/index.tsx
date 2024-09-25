@@ -1,11 +1,12 @@
 "use client";
-import styles from "./navbar.module.css";
 import { useContext, useState } from "react";
-import { AuthContext } from "@/context/AuthContext";
+import styles from "./navbar.module.css";
 import toast from "react-hot-toast";
-import { Modal } from "@/components/Modal";
-import { bebasNeue, robotoSlab } from '@/app/fonts'
 import { IoAddCircle } from "react-icons/io5";
+
+import { Modal } from "@/components/Modal";
+import { AuthContext } from "@/context/AuthContext";
+import Link from "next/link";
 
 interface Category {
     id: string;
@@ -29,10 +30,6 @@ export function Navbar() {
     
     function handleEdit() {
         toast.success("Categoria editada!");
-    }
-
-    function handleAdd() {
-        toast.success("Categoria cadastrada!");
     }
     
     function handleDelete() {
@@ -59,9 +56,9 @@ export function Navbar() {
                     </li>
                 ))}
                 {signed && (
-                    <button className={styles.buttonAdd} onClick={handleAdd}>
+                    <Link href={"/categories/new"} className={styles.buttonAdd}>
                         <IoAddCircle size={28} color="#FFB700"/>
-                    </button>
+                    </Link>
                 )}
             </nav>
             <Modal 
@@ -73,8 +70,8 @@ export function Navbar() {
                     onClick={(e) => e.stopPropagation()}
                 >
                     <div className={styles.textModal}>
-                        <h2 className={`${bebasNeue.className}`}>EXCLUIR</h2>
-                        <p className={`${robotoSlab.className}`}>Tem certeza que deseja excluir a categoria?</p>
+                        <h2>EXCLUIR</h2>
+                        <p>Tem certeza que deseja excluir a categoria?</p>
                     </div>
                     <div className={styles.containerButtons}>
                         <button onClick={() => setShowModal(false)}>Cancelar</button>

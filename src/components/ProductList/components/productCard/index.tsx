@@ -7,17 +7,16 @@ import { MdModeEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import toast from 'react-hot-toast';
 
-import { bebasNeue, robotoSlab } from '@/app/fonts';
 import { CartContext } from '@/context/cartContext';
 import { priceToBrl } from '@/utils/functions/product';
 import { ProductProps } from '@/utils/types/Product';
 import { AuthContext } from '@/context/AuthContext';
 
 interface ProductCartProps {
-    data: ProductProps
+    product: ProductProps
 }
 
-export function ProductCard({ data }: ProductCartProps) {
+export function ProductCard({ product }: ProductCartProps) {
     const { addToCart } = useContext(CartContext);
     const { signed } = useContext(AuthContext);
 
@@ -40,8 +39,8 @@ export function ProductCard({ data }: ProductCartProps) {
 
                 <Image
                     className={styles.productImg}
-                    src={data.image}
-                    alt={data.name}
+                    src={product.image}
+                    alt={product.name}
                     width={168}
                     height={147}
                     quality={100}
@@ -50,14 +49,14 @@ export function ProductCard({ data }: ProductCartProps) {
 
                 <div className={styles.productInfo}>
 
-                    <strong className={`${bebasNeue.className} ${styles.name}`}>{data.name}</strong>
-                    <p className={`${robotoSlab.className} ${styles.description}`}>{data.description}</p>
+                    <strong className={styles.name}>{product.name}</strong>
+                    <p className={styles.description}>{product.description}</p>
 
                     <div className={styles.valueContainer}>
                         {signed ? (
                             <>
                                 <strong className={styles.value}>
-                                    {priceToBrl(data.price)}
+                                    {priceToBrl(product.price)}
                                 </strong>
                                 <div className={styles.containerButtons}>
                                     <button
@@ -77,11 +76,11 @@ export function ProductCard({ data }: ProductCartProps) {
                         ) : (
                             <>
                                 <strong className={styles.value}>
-                                    {priceToBrl(data.price)}
+                                    {priceToBrl(product.price)}
                                 </strong>
                                 <button
                                     className={styles.button}
-                                    onClick={() => handleAddCartItem(data)}
+                                    onClick={() => handleAddCartItem(product)}
                                 >
                                     <FaCartShopping size={24} color='#20170E' />
                                 </button>

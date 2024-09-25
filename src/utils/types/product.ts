@@ -16,3 +16,9 @@ export interface CartProps {
     description: string;
     image: string
 }
+
+export interface CategoriesProps {
+    id: string;
+    name: string;
+    created: Date;
+}
