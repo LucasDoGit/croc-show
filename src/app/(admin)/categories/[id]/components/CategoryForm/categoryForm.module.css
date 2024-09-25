@@ -1,0 +1,33 @@
+.categoryForm {
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.categoryForm label {
+    font-family: 'Bebas Neue', 'Roboto', sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.categoryForm input {
+    padding: 12px 8px;
+    outline: none;
+}
+
+.categoryForm input::placeholder {
+    font-family: 'Bebas Neue', 'Roboto', sans-serif;
+    font-size: 20px;
+    letter-spacing: 3px;
+}
+
+.buttonSubmit {
+    width: 100%;
+    background-color: #FFB700;
+    color: #20170E;
+    margin-top: 12px;
+    padding: 12px 8px;
+    font-weight: 800;
+    text-transform: uppercase;
+    border-radius: 4px;
+}

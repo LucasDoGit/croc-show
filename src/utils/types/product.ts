@@ -20,5 +20,5 @@ export interface CartProps {
 export interface CategoriesProps {
     id: string;
     name: string;
-    created: Date;
+    created: string;
 }

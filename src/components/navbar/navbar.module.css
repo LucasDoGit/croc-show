@@ -9,6 +9,10 @@
     list-style: none;
 }
 
+.categorieItem {
+    position: relative;
+}
+
 .button {
     background-color: #f3dfa0;
     padding: 12px 24px;
@@ -33,6 +37,14 @@
     border-radius: 24px;
     text-align: center;
     align-items: center;
+}
+
+.buttonDelete {
+    position: absolute;
+    top: -8px;
+    right: 0px;
+    background-color: #FFB700;
+    border-radius: 4px;
 }
 
 .containerModal {

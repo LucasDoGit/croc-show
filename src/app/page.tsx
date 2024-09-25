@@ -10,7 +10,7 @@ import { CategoriesProps, ProductProps } from "@/utils/types/Product";
 
 const getCategories = async () => {
   try {
-    const response = await fetch('http://localhost:3000/api/categories', {next: { revalidate: 320 }});
+    const response = await fetch(`${process.env.NEXT_API_URL}/api/categories`, {next: { revalidate: 15 }});
     
     return response.json()
   } catch (error) {
@@ -58,14 +58,10 @@ export default async function Home() {
     <div>
       <Container>
         <Header />
-        <Navbar />
+        <Navbar data={categories} />
 
         <h2 className={styles.menuTitle}>Pasteis</h2>
         <ProductList products={pasteis} />
-
-        {/* {categories.map((item) => (
-          <p>{item.name}</p>
-        ))} */}
 
         <h2 className={styles.menuTitle}>Drinks</h2>
         <ProductList products={pasteis} />
