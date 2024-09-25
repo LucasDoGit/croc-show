@@ -34,18 +34,19 @@
 }
 
 .name {
-    color: #eaeaea;
+    font-family: 'Bebas Neue', 'Roboto', sans-serif;
+    font-weight: 500;
     font-size: 30px;
+    color: #eaeaea;
     text-transform: uppercase;
-    letter-spacing: 5px;
+    letter-spacing: 8px;
 }
 
 .description {
-    font-size: 16px;
-    font-family: var(--font-roboto-slab);
-    color: #eaeaea;
+    font-family: 'Roboto Slab', 'Roboto', sans-serif;
     font-weight: 300;
     line-height: 150%;
+    color: #eaeaea;
     margin-bottom: 8px;
 }
 

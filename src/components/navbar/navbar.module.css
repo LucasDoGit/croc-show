@@ -16,9 +16,8 @@
     text-align: center;
     text-decoration: none;
     color: #20170E;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 500;
-    text-transform: uppercase;
 }
 
 .button:hover {
@@ -27,11 +26,13 @@
 }
 
 .buttonAdd {
+    display: flex;
     background-color: transparent;
     padding: 0 32px;
     border: 2px dashed #FFB700;
     border-radius: 24px;
     text-align: center;
+    align-items: center;
 }
 
 .containerModal {
@@ -54,7 +55,8 @@
 }
 
 .textModal h2 {
-    letter-spacing: 0px;
+    font-weight: 'Bebas Neue', 'Roboto', sans-serif;
+    letter-spacing: 3px;
     text-align: center;
     font-size: 36px;
     font-weight: 600;
@@ -63,6 +65,7 @@
 }
 
 .textModal p {
+    font-family: 'Roboto Slab', 'Roboto', sans-serif;
     max-width: 70%;
     font-size: 20px;
     margin-bottom: 32px;

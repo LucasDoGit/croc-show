@@ -16,7 +16,6 @@
 
 .headerTitle {
     display: flex;
-    font-family: var(--font-bebas), sans-serif;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
@@ -24,15 +23,20 @@
 }
 
 .headerTitle h1 {
+    font-family: 'Bebas Neue', sans-serif;
     color: #FFB700;
     font-size: 64px;
-    letter-spacing: 3px;
+    font-weight: 500;
+    letter-spacing: 6px;
 }
 
 .headerTitle strong {
+    font-family: 'Bebas Neue', sans-serif;
     color: #fff;
-    font-size: 22px;
+    font-size: 24px;
+    font-weight: 500;
     letter-spacing: 3px;
+    text-transform: uppercase;
     margin-bottom: 4px;
 }
 
