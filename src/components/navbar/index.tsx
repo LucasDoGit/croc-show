@@ -59,7 +59,7 @@ export function Navbar({ data }: NavbarProps) {
                                 setShowModal(true)
                                 setIdDelete(item.id)
                             }}>
-                                <MdDelete size={24} color='#20170E' />
+                                <MdDelete size={20} color='#20170E' />
                             </button>
                         )}
                     </li>

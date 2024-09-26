@@ -8,6 +8,7 @@ import { Input } from '@/components/Input';
 import { CategoriesProps } from '@/utils/types/Product';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '@/services/firebaseConnection';
+import { useEffect } from 'react';
 
 const editCategorySchame = z.object({
     name: z.string().min(1, 'Digite um nome válido para categoria'),
@@ -37,12 +38,14 @@ export function CategoryForm({ category }: CategoryFormProps){
         }
     }
 
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm<EditCategorySchame>({
+    const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm<EditCategorySchame>({
         resolver: zodResolver(editCategorySchame),
         mode: "onChange"
     })
 
-    setValue('name', category.name)
+    useEffect(() => {
+        reset(category)
+    }, [category])
 
     return(
         <form

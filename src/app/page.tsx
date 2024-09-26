@@ -10,7 +10,7 @@ import { CategoriesProps, ProductProps } from "@/utils/types/Product";
 
 const getCategories = async () => {
   try {
-    const response = await fetch(`${process.env.NEXT_API_URL}/api/categories`, {next: { revalidate: 15 }});
+    const response = await fetch(`${process.env.NEXT_API_URL}/api/categories`, {next: { revalidate: 320 }});
     
     return response.json()
   } catch (error) {

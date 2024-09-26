@@ -1,0 +1,20 @@
+.title {
+    display: flex;
+    justify-content: flex-start;
+    gap: 4px;
+    margin-bottom: 84px;
+}
+
+.title h2 {
+    font-family: 'Bebas Neue', 'Roboto', sans-serif;
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    margin-left: 18px;
+}
+
+.title a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
