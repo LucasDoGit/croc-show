@@ -1,6 +1,7 @@
 import { InputHTMLAttributes } from "react";
 import styles from "./input.module.css"
 import { RegisterOptions, UseFormRegister } from 'react-hook-form'
+import PropTypes from 'prop-types'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement>{
     type: string;
@@ -9,20 +10,25 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement>{
     register: UseFormRegister<any>;
     error?: string;
     rules?: RegisterOptions;
+    stylesInput?: string;
+    stylesError?: string;
 }
 
-export function Input({ type, placeholder, name, register, rules, error, ...props}: InputProps){
+export function Input({ type, placeholder, name, register, rules, stylesInput, stylesError, error, ...props}: InputProps){
+    const inputClassName = `${styles.input} ${stylesInput || ''}`
+    const errorClassName = `${styles.error} ${stylesError || ''}`
+
     return(
-        <div>
+        <div className={styles.containerInput}>
             <input
-                className={styles.input}
+                className={inputClassName}
                 placeholder={placeholder}
                 type={type}
                 {...register(name, rules)}
                 id={name}
                 {...props}
             />
-            {error && <p className={styles.error}>{error}</p>}
+            {error && <p className={errorClassName}>{error}</p>}
         </div>
     )
 }

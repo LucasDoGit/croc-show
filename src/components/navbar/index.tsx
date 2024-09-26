@@ -14,7 +14,7 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "@/services/firebaseConnection";
 
 interface NavbarProps {
-   data: CategoriesProps[]
+    data: CategoriesProps[]
 }
 
 export function Navbar({ data }: NavbarProps) {
@@ -22,11 +22,11 @@ export function Navbar({ data }: NavbarProps) {
     const [showModal, setShowModal] = useState(false);
     const [idDelete, setIdDelete] = useState("")
     const router = useRouter()
-    
+
     async function handleDelete(id: string) {
         try {
             const docRef = doc(db, "categories", id);
-            
+
             await deleteDoc(docRef).then(() => {
                 toast.success("Categoria excluída")
             }).catch((err) => toast.error("Erro ao excluir categoria", err))
@@ -55,10 +55,13 @@ export function Navbar({ data }: NavbarProps) {
                             {item.name}
                         </button>
                         {signed && (
-                            <button className={styles.buttonDelete} onClick={() => {
-                                setShowModal(true)
-                                setIdDelete(item.id)
-                            }}>
+                            <button
+                                className={styles.buttonDelete}
+                                onClick={() => {
+                                    setShowModal(true)
+                                    setIdDelete(item.id)
+                                }}
+                            >
                                 <MdDelete size={20} color='#20170E' />
                             </button>
                         )}
@@ -66,15 +69,15 @@ export function Navbar({ data }: NavbarProps) {
                 ))}
                 {signed && (
                     <Link href={"/categories/new"} className={styles.buttonAdd}>
-                        <IoAddCircle size={28} color="#FFB700"/>
+                        <IoAddCircle size={28} color="#FFB700" />
                     </Link>
                 )}
             </nav>
-            <Modal 
-                isOpen={showModal} 
+            <Modal
+                isOpen={showModal}
                 onClose={() => setShowModal(false)}
             >
-                <div 
+                <div
                     className={styles.containerModal}
                     onClick={(e) => e.stopPropagation()}
                 >

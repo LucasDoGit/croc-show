@@ -11,11 +11,56 @@
 
 .contentContainer {
     display: flex;
+    gap: 10px;
     margin: 0 20px;
 }
 
 .imageContainer {
-    flex: 1;
+    position: relative;
+    width: 320px;
+    height: 280px;
+    background-color: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.buttonUpload {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    border-radius: 4px;
+    cursor: default !important;
+}
+
+.buttonUpload:active {
+    transform: none;
+}
+
+.iconUpload {
+    position: absolute;
+    cursor: pointer;
+} 
+
+.buttonUpload input {
+    opacity: 0;
+    cursor: pointer;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.messageError {
+    font-family: 'Roboto', sans-serif;
+    margin: 0 4px;
+    color: #f34e26;
+    font-size: 14px;
 }
 
 .inputGroup {
@@ -33,13 +78,39 @@
 
 .inputGroup input {
     padding: 12px 8px;
+    font-family: 'Bebas Neue', 'Roboto', sans-serif;
+    letter-spacing: 3px;
+    font-size: 20px;
     outline: none;
 }
 
-.inputGroup input::placeholder {
+.inputGroup input::placeholder, .inputGroup textarea::placeholder {
     font-family: 'Bebas Neue', 'Roboto', sans-serif;
     font-size: 20px;
     letter-spacing: 3px;
+}
+
+.inputGroup textarea {
+    width: 100%;
+    font-size: 14px;
+    font-family: 'Roboto Slab', 'Roboto', sans-serif;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.25rem;
+    padding: 12px 8px;
+    margin: 0.25rem 0;
+    resize: none;
+    min-height: 130px;
+    height: 100%;
+    outline: none;
+}
+
+.inputPrice {
+    width: 50% !important;
+    align-self: self-end;
+}
+
+.inputPriceError {
+    align-self: self-end;
 }
 
 .buttonSubmit {
@@ -51,4 +122,16 @@
     font-weight: 800;
     text-transform: uppercase;
     border-radius: 4px;
+}
+
+@media (max-width: 640px) {
+    .form {
+        max-width: 450px;
+    }
+    .contentContainer {
+        flex-direction: column;
+    }
+    .buttonUpload {
+        flex: none;
+    }
 }
