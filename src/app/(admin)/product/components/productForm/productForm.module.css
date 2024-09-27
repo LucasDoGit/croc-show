@@ -15,6 +15,11 @@
     margin: 0 20px;
 }
 
+.productImage {
+    display: flex;
+    justify-content: center;
+}
+
 .imageContainer {
     position: relative;
     width: 320px;
@@ -22,6 +27,16 @@
     background-color: #fff;
     border-radius: 4px;
     overflow: hidden;
+}
+
+.buttonDelete {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 99;
+    background-color: #fff;
+    padding: 3px;
+    border-radius: 4px;
 }
 
 .buttonUpload {
@@ -84,6 +99,16 @@
     outline: none;
 }
 
+.select {
+    padding: 12px 8px;
+    font-family: 'Bebas Neue', 'Roboto', sans-serif;
+    border-radius: 4px;
+    letter-spacing: 3px;
+    font-size: 20px;
+    outline: none;
+    color: #a5a5a5;
+}
+
 .inputGroup input::placeholder, .inputGroup textarea::placeholder {
     font-family: 'Bebas Neue', 'Roboto', sans-serif;
     font-size: 20px;
@@ -126,7 +151,7 @@
 
 @media (max-width: 640px) {
     .form {
-        max-width: 450px;
+        max-width: 360px;
     }
     .contentContainer {
         flex-direction: column;

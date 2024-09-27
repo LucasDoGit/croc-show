@@ -10,13 +10,13 @@ export const metadata: Metadata = {
   description: "Pastéis e lanches servidos com muita qualidade e crocancia para toda Curitiba.",
   icons: {
       icon: [
-        '/assets/favicon.ico',
+        '/icons/favicon.ico',
       ],
       apple: [
-        '/assets/apple-touch-icon.png'
+        '/icons/apple-touch-icon.png'
       ],
       shortcut: [
-        '/assets/apple-touch-icon.png'
+        '/icons/apple-touch-icon.png'
       ]
     },
   manifest: '/site.webmanifest'
