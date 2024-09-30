@@ -7,7 +7,6 @@ import { doc, getDoc } from "firebase/firestore";
 import Link from "next/link";
 import { FaLessThan } from "react-icons/fa";
 import { ProductForm } from '../components/productForm';
-import { useRouter } from 'next/navigation';
 
 async function getProduct(id: string){
     try {
@@ -67,7 +66,7 @@ export default async function Product({ params }: ProductDetailProps){
                 </Link>
                 <h2>Editar produto</h2>
             </div>
-            <ProductForm product={product}/>
+            <ProductForm product={product} />
         </Container>
     )
 }

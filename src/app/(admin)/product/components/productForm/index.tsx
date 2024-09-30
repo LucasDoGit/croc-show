@@ -8,7 +8,6 @@ import { MdDelete } from "react-icons/md";
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 
 import { CategoriesProps, ProductProps } from '@/utils/types/Product';
 import { Input } from '@/components/Input';
@@ -16,8 +15,12 @@ import { Input } from '@/components/Input';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { addDoc, collection, doc, getDocs, updateDoc } from 'firebase/firestore';
 import { db, storage } from '@/services/firebaseConnection';
+import { z } from 'zod';
 
-const editProductSchema = z.object({
+const MAX_FILE_SIZE = 10 * 1024 * 1024;
+const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+
+const productSchema = z.object({
     name: z.string().min(1, 'Dígite um nome válido para o produto.'),
     description: z.string().min(1, 'Dígite uma descrição para o produto.'),
     price: z.string().min(1, 'Digite o valor do produto.').refine((value) => {
@@ -25,31 +28,34 @@ const editProductSchema = z.object({
     }, {
         message: "Digite um preço válido."
     }),
-    categoryId: z.string().min(1, 'Seleciona um categoria para o produto.')
+    categoryId: z.string().min(1, 'Seleciona um categoria para o produto.'),
+    image: z.any()
+        .refine(file => file !== undefined, 'Você deve selecionar uma imagem')
+        .refine(file => file && file.size <= MAX_FILE_SIZE, `O tamanho máximo da imagem é ${MAX_FILE_SIZE / 1000000}MB`)
+        .refine(file => file && ACCEPTED_IMAGE_TYPES.includes(file?.type), 'Formato de imagem não suportado'),
 })
 
-export type EditProductSchema = z.infer<typeof editProductSchema>
+type ProductFormData = z.infer<typeof productSchema>
 
 interface ProductFormProps {
     product?: ProductProps;
 }
 
-export function ProductForm({product}: ProductFormProps) {
-    const [image, setImage] = useState<File | null>(null);
+export function ProductForm({ product }: ProductFormProps) {
     const [imagePreview, setImagePreview] = useState<string | null>('');
     const [categories, setCategories] = useState<CategoriesProps[]>([])
 
-    const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm<EditProductSchema>({
-        resolver: zodResolver(editProductSchema),
+    const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm<ProductFormData>({
+        resolver: zodResolver(productSchema),
         mode: "onChange"
     })
 
     useEffect(() => {
-        async function handleCategories(){
+        async function handleCategories() {
             const categoriesSnapshot = await getDocs(collection(db, 'categories'));
             const categoriesData = categoriesSnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data(),
+                id: doc.id,
+                ...doc.data(),
             })) as CategoriesProps[];
             setCategories(categoriesData);
         }
@@ -58,47 +64,41 @@ export function ProductForm({product}: ProductFormProps) {
     }, [])
 
     useEffect(() => {
-        function getProduct(){
-            if(!product) return;
-    
+        function getProduct() {
+            if (!product) return;
+
             reset({
                 name: product.name,
                 description: product.description,
                 categoryId: product.categoryId,
                 price: product.price.toString(),
+                // image: 
             })
-    
+
             setImagePreview(product.image)
-            setImage(null)
         }
 
         getProduct()
     }, [product, categories])
 
-    async function handleFile(e: ChangeEvent<HTMLInputElement>) {
+    function handleImageChange(e: ChangeEvent<HTMLInputElement>) {
         if (e.target.files && e.target.files[0]) {
             const image = e.target.files[0]
 
-            if (image.type === "image/jpeg" || image.type === "image/png") {
-                const url = URL.createObjectURL(image)
-                setImagePreview(url)
-                setImage(image)
-            } else {
-                toast.error("A foto precisa estar no formato de JPEG ou PNG")
-                return
-            }
+            setValue("image", image)
+
+            const objectURL = URL.createObjectURL(image);
+            setImagePreview(objectURL);
+            return () => URL.revokeObjectURL(objectURL);
+        } else {
+            setImagePreview(null);
         }
     }
 
-    async function handleCreateProduct(data: EditProductSchema) {
-
-        if (!image) {
-            toast.error("Por favor ínsira a imagem do produto!")
-            return
-        }
+    async function handleCreateProduct(data: ProductFormData) {
 
         const toastId = toast.loading('Cadastrando produto...');
-        
+
         try {
             const docRef = await addDoc(collection(db, "products"), {
                 name: data.name.toUpperCase(),
@@ -109,7 +109,7 @@ export function ProductForm({product}: ProductFormProps) {
             })
 
             const imageRef = ref(storage, `products/${docRef.id}/foto`)
-            const uploadTask = uploadBytesResumable(imageRef, image)
+            const uploadTask = uploadBytesResumable(imageRef, data.image)
 
             uploadTask.on(
                 'state_changed',
@@ -128,7 +128,6 @@ export function ProductForm({product}: ProductFormProps) {
                     toast.success('Produto cadastrado com sucesso!', {
                         id: toastId
                     })
-                    setImage(null)
                     setImagePreview(null)
                     reset()
                 }
@@ -141,28 +140,29 @@ export function ProductForm({product}: ProductFormProps) {
         }
     }
 
-    async function handleSubmitForm(data: EditProductSchema){
-        if(product){
-            handleCreateProduct(data)
-        } else {
+    async function onSubmitHandler(data: ProductFormData) {
+        console.log('entrou no submit handler')
+        if (product) {
             handleEditProduct(data)
+        } else {
+            handleCreateProduct(data)
         }
     }
 
-    async function handleEditProduct(data: EditProductSchema) {
+    async function handleEditProduct(data: ProductFormData) {
+        console.log(data)
         console.log('teste')
         toast.success("Produto editado")
     }
 
     async function handleDeleteImage() {
-        setImage(null)
         setImagePreview('')
     }
 
     return (
         <form
             className={styles.form}
-            onSubmit={handleSubmit(handleSubmitForm)}
+            onSubmit={handleSubmit(onSubmitHandler)}
         >
             <div className={styles.contentContainer}>
                 <div className={styles.productImage}>
@@ -175,12 +175,12 @@ export function ProductForm({product}: ProductFormProps) {
                                 sizes='(max-width: 768px) 100vw, (max-width: 1200px) 100vw'
                                 fill={true}
                             />
-                            <button 
-                                type='button' 
+                            <button
+                                type='button'
                                 className={styles.buttonDelete}
                                 onClick={handleDeleteImage}
                             >
-                                <MdDelete size={24} color='#f34e26'/>
+                                <MdDelete size={24} color='#f34e26' />
                             </button>
                         </div>
                     ) : (
@@ -192,11 +192,12 @@ export function ProductForm({product}: ProductFormProps) {
                                 <input
                                     type="file"
                                     accept="image/*"
-                                    onChange={handleFile}
+                                    onChange={handleImageChange}
                                 />
                             </button>
                         </div>
                     )}
+                    {errors.image && <p className={styles.messageError}>{errors.image.message?.toString()}</p>}
                 </div>
                 <div className={styles.inputGroup}>
                     <Input
@@ -220,12 +221,12 @@ export function ProductForm({product}: ProductFormProps) {
                         >
                             <option value="" className={styles.option}>Selecione uma categoria</option>
                             {categories.map(category => (
-                                <option 
-                                    key={category.id} 
+                                <option
+                                    key={category.id}
                                     value={category.id}
                                     className={styles.option}
                                 >
-                                {category.name}
+                                    {category.name}
                                 </option>
                             ))}
                         </select>
