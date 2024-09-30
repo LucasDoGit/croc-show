@@ -1,7 +1,6 @@
 import { InputHTMLAttributes } from "react";
 import styles from "./input.module.css"
 import { RegisterOptions, UseFormRegister } from 'react-hook-form'
-import PropTypes from 'prop-types'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement>{
     type: string;

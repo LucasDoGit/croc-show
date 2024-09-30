@@ -11,6 +11,7 @@ import { CartContext } from '@/context/cartContext';
 import { priceToBrl } from '@/utils/functions/product';
 import { ProductProps } from '@/utils/types/Product';
 import { AuthContext } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
 
 interface ProductCartProps {
     product: ProductProps
@@ -19,14 +20,15 @@ interface ProductCartProps {
 export function ProductCard({ product }: ProductCartProps) {
     const { addToCart } = useContext(CartContext);
     const { signed } = useContext(AuthContext);
+    const router = useRouter()
 
     function handleAddCartItem(product: ProductProps) {
         addToCart(product)
         toast.success("Produto adicionado no carrinho")
     }
 
-    function handleEdit() {
-        toast.success("Produto editado com sucesso!");
+    function handleEdit(id: string) {
+        router.push(`/product/${id}`);
     }
 
     function handleDelete() {
@@ -56,12 +58,15 @@ export function ProductCard({ product }: ProductCartProps) {
                         {signed ? (
                             <>
                                 <strong className={styles.value}>
-                                    {priceToBrl(product.price)}
+                                    {product.price.toLocaleString("pt-BR", {
+                                        style: 'currency',
+                                        currency: 'BRL'
+                                    })}
                                 </strong>
                                 <div className={styles.containerButtons}>
                                     <button
                                         className={styles.button}
-                                        onClick={handleEdit}
+                                        onClick={() => handleEdit(product.id)}
                                     >
                                         <MdModeEdit size={24} color='#20170E' />
                                     </button>

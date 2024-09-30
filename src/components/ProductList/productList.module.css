@@ -5,6 +5,18 @@
     padding-bottom: 48px;
 }
 
+.menuTitle {
+    font-weight: 'Bebas Neue', 'Roboto', sans-serif;
+    font-weight: 500;
+    color: #FFB700;
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 16px 0;
+    margin-bottom: 12px;
+}
+
 .linkAddItem {
     display: flex;
     align-items: center;

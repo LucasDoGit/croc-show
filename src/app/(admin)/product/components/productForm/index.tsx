@@ -17,7 +17,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { addDoc, collection, doc, getDocs, updateDoc } from 'firebase/firestore';
 import { db, storage } from '@/services/firebaseConnection';
 
-const editCategorySchame = z.object({
+const editProductSchema = z.object({
     name: z.string().min(1, 'Dígite um nome válido para o produto.'),
     description: z.string().min(1, 'Dígite uma descrição para o produto.'),
     price: z.string().min(1, 'Digite o valor do produto.').refine((value) => {
@@ -28,19 +28,19 @@ const editCategorySchame = z.object({
     categoryId: z.string().min(1, 'Seleciona um categoria para o produto.')
 })
 
-export type EditCategorySchame = z.infer<typeof editCategorySchame>
+export type EditProductSchema = z.infer<typeof editProductSchema>
 
 interface ProductFormProps {
-    product: ProductProps
+    product?: ProductProps;
 }
 
-export function ProductForm() {
+export function ProductForm({product}: ProductFormProps) {
     const [image, setImage] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>('');
     const [categories, setCategories] = useState<CategoriesProps[]>([])
 
-    const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm<EditCategorySchame>({
-        resolver: zodResolver(editCategorySchame),
+    const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm<EditProductSchema>({
+        resolver: zodResolver(editProductSchema),
         mode: "onChange"
     })
 
@@ -57,6 +57,24 @@ export function ProductForm() {
         handleCategories()
     }, [])
 
+    useEffect(() => {
+        function getProduct(){
+            if(!product) return;
+    
+            reset({
+                name: product.name,
+                description: product.description,
+                categoryId: product.categoryId,
+                price: product.price.toString(),
+            })
+    
+            setImagePreview(product.image)
+            setImage(null)
+        }
+
+        getProduct()
+    }, [product, categories])
+
     async function handleFile(e: ChangeEvent<HTMLInputElement>) {
         if (e.target.files && e.target.files[0]) {
             const image = e.target.files[0]
@@ -72,7 +90,7 @@ export function ProductForm() {
         }
     }
 
-    async function onSubmit(data: EditCategorySchame) {
+    async function handleCreateProduct(data: EditProductSchema) {
 
         if (!image) {
             toast.error("Por favor ínsira a imagem do produto!")
@@ -123,6 +141,19 @@ export function ProductForm() {
         }
     }
 
+    async function handleSubmitForm(data: EditProductSchema){
+        if(product){
+            handleCreateProduct(data)
+        } else {
+            handleEditProduct(data)
+        }
+    }
+
+    async function handleEditProduct(data: EditProductSchema) {
+        console.log('teste')
+        toast.success("Produto editado")
+    }
+
     async function handleDeleteImage() {
         setImage(null)
         setImagePreview('')
@@ -131,7 +162,7 @@ export function ProductForm() {
     return (
         <form
             className={styles.form}
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(handleSubmitForm)}
         >
             <div className={styles.contentContainer}>
                 <div className={styles.productImage}>
@@ -140,6 +171,8 @@ export function ProductForm() {
                             <Image
                                 src={imagePreview}
                                 alt={'Foto do produto'}
+                                priority={true}
+                                sizes='(max-width: 768px) 100vw, (max-width: 1200px) 100vw'
                                 fill={true}
                             />
                             <button 

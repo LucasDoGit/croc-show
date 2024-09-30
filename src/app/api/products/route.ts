@@ -1,34 +1,65 @@
 import { db } from "@/services/firebaseConnection";
 import { CategoriesProps, ProductProps } from "@/utils/types/Product";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { NextResponse } from "next/server";
 
-const fetchCategories = async (): Promise<CategoriesProps[]> => {
-    const categoriesSnapshot = await getDocs(collection(db, 'categories'));
-    return categoriesSnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-    })) as CategoriesProps[];
-};
 
-// Função para buscar os produtos
-const fetchProducts = async (): Promise<ProductProps[]> => {
-    const productsSnapshot = await getDocs(collection(db, 'products'));
-    return productsSnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-    })) as unknown as ProductProps[];
-};
+export async function fetchProducts(): Promise<ProductProps[]> {
+    try {
+        const productsRef = collection(db, 'products');
+        const q = query(productsRef, orderBy('name', 'asc'))
+        const snapshot = await getDocs(q)
+        let listProduct: ProductProps[] = [];
 
-// Função principal para buscar produtos e categorias e agrupar
-const fetchData = async () => {
-    // Executa as consultas em paralelo para otimizar o tempo de resposta
-    const [categories, products] = await Promise.all([fetchCategories(), fetchProducts()]);
+        snapshot.forEach(doc => {
+            listProduct.push({
+                id: doc.id,
+                name: doc.data().name,
+                description:  doc.data().description,
+                categoryId:  doc.data().categoryId,
+                price:  parseFloat(doc.data().price),
+                image:  doc.data().imageUrl,
+            })
+        })
 
-    // Agrupa os produtos por categoria
-    const productsByCategory = categories.map(category => ({
-        ...category,
-        products: products.filter(product => product.categoryId === category.id),
-    }));
+        return listProduct;
+    } catch (error) {
+        console.log('Erro ao buscar produtos', error)
+        return []
+    }
+}
 
-    return productsByCategory;
+export async function fetchCategories(): Promise<CategoriesProps[]> {
+    const categoriesRef = collection(db, 'categories');
+    const q = query(categoriesRef, orderBy('name', 'asc'))
+    const snapshot = await getDocs(q)
+    let listCategories: CategoriesProps[] = [];
+
+    snapshot.forEach(doc => {
+        listCategories.push({
+            id: doc.id,
+            name: doc.data().name,
+            created: doc.data().created,
+        })
+    })
+
+    return listCategories
+}
+
+export async function GET(){
+    try {
+        const [products, categories] = await Promise.all([fetchProducts(), fetchCategories()]);
+
+        const groupedProducts = categories.map((category) => {
+            return {
+            category: category.name,
+            products: products.filter((product) => product.categoryId === category.id),
+            };
+        });
+
+        return NextResponse.json(groupedProducts)
+    } catch (error) {
+        console.log("Erro ao buscar produtos", error)
+        return NextResponse.json({ error: 'Erro ao buscar produtos' }, { status: 500 })
+    }
 };
