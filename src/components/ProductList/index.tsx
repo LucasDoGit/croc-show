@@ -12,10 +12,10 @@ interface ProductListProps {
     products: ProductProps[]
 }
 
-export function ProductList({ products, category }: ProductListProps){
+export function ProductList({ products, category }: ProductListProps) {
     const { signed } = useContext(AuthContext);
 
-    return(
+    return (
         <>
             <h2 className={styles.menuTitle}>{category}</h2>
             <section className={styles.menuGrid}>
@@ -23,7 +23,7 @@ export function ProductList({ products, category }: ProductListProps){
                     <>
                         {signed ? (
                             <Link href="/product/new" className={styles.linkAddItem}>
-                            <IoAddCircle size={32} color="#FFB700"/>
+                                <IoAddCircle size={32} color="#FFB700" />
                             </Link>
                         ) : (
                             <h2>Ops...não temos estes produtos</h2>
@@ -32,11 +32,11 @@ export function ProductList({ products, category }: ProductListProps){
                 ) : (
                     <>
                         {products.map((item) => (
-                        <ProductCard key={item.id} product={item} />
+                            <ProductCard key={item.id} product={item} />
                         ))}
                         {signed && (
                             <Link href="/product/new" className={styles.linkAddItem}>
-                                <IoAddCircle size={32} color="#FFB700"/>
+                                <IoAddCircle size={32} color="#FFB700" />
                             </Link>
                         )}
                     </>

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import toast from 'react-hot-toast';
 import { FiUpload } from 'react-icons/fi';
 import { MdDelete } from "react-icons/md";
+import { v4 as uuidv4 } from 'uuid'
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -21,8 +22,8 @@ const MAX_FILE_SIZE = 10 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
 const productSchema = z.object({
-    name: z.string().min(1, 'Dígite um nome válido para o produto.'),
-    description: z.string().min(1, 'Dígite uma descrição para o produto.'),
+    name: z.string().min(1, 'Dígite um nome válido para o produto.').max(36, 'O titulo deve ter no máximo 36 caracteres'),
+    description: z.string().min(1, 'Dígite uma descrição para o produto.').max(160, 'A descrição deve ter no máximo 160 caracteres'),
     price: z.string().min(1, 'Digite o valor do produto.').refine((value) => {
         return /^(\d{1,3}(,\d{3})*(\.\d{2})?|\d{1,3}(\.\d{3})*(,\d{2})?)$/.test(value);
     }, {
@@ -51,7 +52,7 @@ export function ProductForm({ product }: ProductFormProps) {
     const [imagePreview, setImagePreview] = useState<string | null>('');
     const [categories, setCategories] = useState<CategoriesProps[]>([])
 
-    const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm<ProductFormData>({
+    const { register, handleSubmit, setValue, reset, getValues, formState: { errors } } = useForm<ProductFormData>({
         resolver: zodResolver(productSchema),
         mode: "onChange"
     })
@@ -72,6 +73,8 @@ export function ProductForm({ product }: ProductFormProps) {
     useEffect(() => {
         function getProduct() {
             if (!product) return;
+
+            console.log(product)
 
             reset({
                 name: product.name,
@@ -119,7 +122,7 @@ export function ProductForm({ product }: ProductFormProps) {
                 created: new Date(),
             })
 
-            const imageRef = ref(storage, `products/${docRef.id}/${crypto.randomUUID()}`)
+            const imageRef = ref(storage, `products/${docRef.id}/${uuidv4()}`)
             const uploadTask = uploadBytesResumable(imageRef, data.image)
 
             uploadTask.on(
@@ -172,11 +175,19 @@ export function ProductForm({ product }: ProductFormProps) {
                 categoryId: data.categoryId,
             })
 
-            if(!(data.image !instanceof File)){
+            if(!(data.image instanceof File)){
+                
+                await updateDoc(doc(db, 'products', product.id), {
+                    imageUrl: data.image,
+                });
+
+                toast.success('Produto editado com sucesso!', {
+                    id: toastId
+                })
                 return
             } 
 
-            const imageRef = ref(storage, `products/${product.id}/${crypto.randomUUID()}`)
+            const imageRef = ref(storage, `products/${product.id}/${uuidv4()}`)
             const uploadTask = uploadBytesResumable(imageRef, data.image)
 
             uploadTask.on(
@@ -199,8 +210,8 @@ export function ProductForm({ product }: ProductFormProps) {
                 }
             )
         } catch (error) {
-            console.log("Erro ao tentar cadastrar produto", error)
-            toast.error("Erro ao cadastrar produto!", {
+            console.log("Erro ao tentar editar o produto", error)
+            toast.error("Erro ao editar produto!", {
                 id: toastId
             })
         }
@@ -209,7 +220,12 @@ export function ProductForm({ product }: ProductFormProps) {
 
     async function handleDeleteImage() {
         setImagePreview('')
-        setValue('image', null)
+        const image = getValues('image')
+
+        if(image instanceof File){
+            setValue('image', null)
+            return
+        } 
 
         if(product){
             try {
