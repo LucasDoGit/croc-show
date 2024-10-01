@@ -12,8 +12,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { CategoriesProps, ProductProps } from '@/utils/types/Product';
 import { Input } from '@/components/Input';
 
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import { addDoc, collection, doc, getDocs, updateDoc } from 'firebase/firestore';
+import { getDownloadURL, ref, uploadBytesResumable, deleteObject } from 'firebase/storage';
+import { addDoc, collection, doc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
 import { db, storage } from '@/services/firebaseConnection';
 import { z } from 'zod';
 
@@ -29,10 +29,16 @@ const productSchema = z.object({
         message: "Digite um preço válido."
     }),
     categoryId: z.string().min(1, 'Seleciona um categoria para o produto.'),
-    image: z.any()
-        .refine(file => file !== undefined, 'Você deve selecionar uma imagem')
-        .refine(file => file && file.size <= MAX_FILE_SIZE, `O tamanho máximo da imagem é ${MAX_FILE_SIZE / 1000000}MB`)
-        .refine(file => file && ACCEPTED_IMAGE_TYPES.includes(file?.type), 'Formato de imagem não suportado'),
+    image: z.union([
+        z.any()
+            .refine(file => file !== undefined, 'Você deve selecionar uma imagem')
+            .refine(file => file !== null, 'Você deve selecionar uma imagem')
+            .refine(file => file && file.size <= MAX_FILE_SIZE, `O tamanho máximo da imagem é ${(MAX_FILE_SIZE / 1000000).toFixed(2)}MB`)
+            .refine(file => file && ACCEPTED_IMAGE_TYPES.includes(file?.type), 'Formato de imagem não suportado'),
+        z.string()
+        .url("URL inválida")
+        .optional(),
+    ])
 })
 
 type ProductFormData = z.infer<typeof productSchema>
@@ -72,7 +78,7 @@ export function ProductForm({ product }: ProductFormProps) {
                 description: product.description,
                 categoryId: product.categoryId,
                 price: product.price.toString(),
-                // image: 
+                image: product.image
             })
 
             setImagePreview(product.image)
@@ -97,6 +103,11 @@ export function ProductForm({ product }: ProductFormProps) {
 
     async function handleCreateProduct(data: ProductFormData) {
 
+        if(!data.image) {
+            toast.error("O produto deve ter uma imagem!")
+            return;
+        }
+
         const toastId = toast.loading('Cadastrando produto...');
 
         try {
@@ -108,7 +119,7 @@ export function ProductForm({ product }: ProductFormProps) {
                 created: new Date(),
             })
 
-            const imageRef = ref(storage, `products/${docRef.id}/foto`)
+            const imageRef = ref(storage, `products/${docRef.id}/${crypto.randomUUID()}`)
             const uploadTask = uploadBytesResumable(imageRef, data.image)
 
             uploadTask.on(
@@ -140,23 +151,91 @@ export function ProductForm({ product }: ProductFormProps) {
         }
     }
 
+    async function handleEditProduct(data: ProductFormData) {
+        
+        if(!data.image || data.image === null){
+            toast.error("O produto deve ter uma imagem!")
+            return;
+        }
+
+        if(!product) return;
+
+        const toastId = toast.loading('Editando produto...');
+
+        try {
+            const productRef = doc(db, "products", product.id);
+            
+            await setDoc(productRef, {
+                name: data.name.toUpperCase(),
+                price: data.price,
+                description: data.description,
+                categoryId: data.categoryId,
+            })
+
+            if(!(data.image !instanceof File)){
+                return
+            } 
+
+            const imageRef = ref(storage, `products/${product.id}/${crypto.randomUUID()}`)
+            const uploadTask = uploadBytesResumable(imageRef, data.image)
+
+            uploadTask.on(
+                'state_changed',
+                null,
+                (error) => {
+                    console.error('Erro ao fazer upload da imagem:', error);
+                    toast.error("Erro ao fazer upload da imagem")
+                },
+                async () => {
+                    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+
+                    await updateDoc(doc(db, 'products', product.id), {
+                        imageUrl: downloadURL,
+                    });
+
+                    toast.success('Produto editado com sucesso!', {
+                        id: toastId
+                    })
+                }
+            )
+        } catch (error) {
+            console.log("Erro ao tentar cadastrar produto", error)
+            toast.error("Erro ao cadastrar produto!", {
+                id: toastId
+            })
+        }
+        
+    }
+
+    async function handleDeleteImage() {
+        setImagePreview('')
+        setValue('image', null)
+
+        if(product){
+            try {
+                const imageRef = ref(storage, product.image);
+            
+                await deleteObject(imageRef);
+
+                const productRef = doc(db, "products", product.id);
+                await updateDoc(productRef, {
+                    imageUrl: null,
+                });
+
+                toast.success('imagem apagada com sucesso!')
+            } catch (error) {
+                console.error("Erro ao apagar a imagem:", error);
+                toast.error('Erro ao apagar imagem')
+            }
+        }
+    }
+
     async function onSubmitHandler(data: ProductFormData) {
-        console.log('entrou no submit handler')
         if (product) {
             handleEditProduct(data)
         } else {
             handleCreateProduct(data)
         }
-    }
-
-    async function handleEditProduct(data: ProductFormData) {
-        console.log(data)
-        console.log('teste')
-        toast.success("Produto editado")
-    }
-
-    async function handleDeleteImage() {
-        setImagePreview('')
     }
 
     return (
