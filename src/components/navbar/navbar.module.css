@@ -1,22 +1,27 @@
-
 .navbar {
-    padding: 16px 0;
+    width: 100%;
+}
+
+.swiper {
+    padding: 8px 0;
 }
 
 .swiper_slide {
-    text-align: center;
-    font-size: 18px;
     background-color: #f3dfa0;
-    padding: 12px 24px;
     border-radius: 24px;
-    text-align: center;
-    color: #20170E;
-    font-weight: 500;
-
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+}
+
+.swiper_link {
+    background-color: transparent;
+    text-align: center;
+    font-size: 16px;
+    padding: 12px 0px;
+    color: #20170E;
+    font-weight: 500;
 }
 
 .swiper_slide:hover {
@@ -41,22 +46,20 @@
     cursor: pointer;
 }
 
-.categorieItem {
-    position: relative;
-}
-
-.button:hover {
-    background-color: #FFB700;
-    transition: all .6s;
-}
-
 .buttonDelete {
     position: absolute;
+    display: flex;
     top: -8px;
     right: 0px;
     background-color: #FFB700;
     padding: 2px;
+    z-index: 9999;
     border-radius: 4px;
+    transition: all .6s;
+}
+
+.buttonDelete:hover {
+    background-color: #f34e26;
 }
 
 .containerModal {

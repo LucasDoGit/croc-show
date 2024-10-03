@@ -22,7 +22,7 @@ type NewCategorySchame = z.infer<typeof newCategorySchame>
 
 export default function newCategory() {
 
-    const { register, handleSubmit, formState: { errors }, } = useForm<NewCategorySchame>({
+    const { register, handleSubmit, reset, formState: { errors }, } = useForm<NewCategorySchame>({
         resolver: zodResolver(newCategorySchame),
         mode: "onChange"
     })
@@ -34,6 +34,7 @@ export default function newCategory() {
         })
         .then(() => {
             toast.success("Categoria cadastrada!")
+            reset()
         })
         .catch((err) => {
             console.log("Erro ao cadastrar categoria", err)
