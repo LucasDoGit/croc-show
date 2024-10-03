@@ -18,7 +18,7 @@ export function ProductList({ products, category }: ProductListProps) {
     return (
         <>
             <h2 className={styles.menuTitle}>{category}</h2>
-            <section className={styles.menuGrid}>
+            <section className={styles.menuGrid} id={`${category}`}>
                 {products.length === 0 ? (
                     <>
                         {signed ? (

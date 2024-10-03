@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import styles from './header.module.css'
+import { OperatingHours } from "./components/operatingHours"
 
 export function Header() {
     return (
@@ -21,7 +22,7 @@ export function Header() {
                 <div className={styles.headerTitle}>
                     <h1>Lanches</h1>
                     <strong>Delivery para toda curitiba</strong>
-                    <span className={styles.openingHours}>Seg á Dom - 18:00 as 01:30</span>
+                    <OperatingHours />
                 </div>
             </div>
         </header>

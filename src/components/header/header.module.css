@@ -40,15 +40,6 @@
     margin-bottom: 4px;
 }
 
-.openingHours {
-    font-size: 16px;
-    font-weight: 500;
-    color: #fff;
-    background-color: #54CC0A;
-    padding: 8px 12px;
-    border-radius: 4px;
-}
-
 @media (max-width: 640px){
     .headerContainer{
         flex-direction: column;
@@ -61,5 +52,11 @@
     }
     .headerTitle h1 {
         font-size: 48px;
+    }
+}
+
+@media (max-width: 640px) {
+    .headerTitle strong {
+        font-size: 18px;
     }
 }

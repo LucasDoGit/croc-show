@@ -14,7 +14,7 @@
 .imageContainer {
     position: relative;
     min-width: 200px;
-    min-height: 160px;
+    min-height: 200px;
     border-radius: 4px;
     transition: 300ms;
     overflow: hidden;

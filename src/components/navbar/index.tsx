@@ -1,16 +1,17 @@
 "use client";
 import { useContext, useState } from "react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import "swiper/css";
 import "swiper/css/free-mode";
 import styles from "./navbar.module.css";
-import toast from "react-hot-toast";
-import { IoAddCircle } from "react-icons/io5";
-
-import { Modal } from "@/components/Modal";
 import { AuthContext } from "@/context/AuthContext";
+import { Modal } from "@/components/Modal";
 import { CategoriesProps } from "@/utils/types/Product";
+
+import { IoAddCircle } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
-import { useRouter } from "next/navigation";
+
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "@/services/firebaseConnection";
 

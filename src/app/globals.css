@@ -60,6 +60,10 @@ body {
   background-color: var(--bg);
 }
 
+html {
+  scroll-behavior: smooth
+}
+
 button:hover {
   cursor: pointer;
 }
