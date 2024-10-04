@@ -2,7 +2,7 @@ import styles from "./footer.module.css";
 import Image from "next/image";
 import { FaFacebookSquare } from "react-icons/fa";
 import { FaSquareInstagram } from "react-icons/fa6";
-import { FaLinkedin } from "react-icons/fa6";
+import { FaWhatsappSquare } from "react-icons/fa";
 
 export function Footer() {
     return (
@@ -37,7 +37,7 @@ export function Footer() {
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        <FaLinkedin size={38} color="#FFB700" />
+                        <FaWhatsappSquare size={38} color="#FFB700" />
                     </a>
                 </div>
                 <div className={styles.contato}>
