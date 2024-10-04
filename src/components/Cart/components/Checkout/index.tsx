@@ -80,16 +80,24 @@ export function Checkout({ onClose }: CheckoutProps) {
 
 function checkoutOrder() {
 
-    const cartItems = cart.map((item) => {
-        return (
-            `${item.name}, Quantidade: ${item.quantity} (${priceToBrl(item.total)})`
-        )
-    }).join(" ")
-
-    const message = encodeURIComponent(cartItems)
+    // 🍽️ *Cliente*: ${orderDetails.customerName}  
     const phone = "41996546683"
+    const message = 
+    `📢 *Novo Pedido Recebido!* 📢
 
-    window.open(`https://wa.me/${phone}?text=Novo pedido: ${message} Endereco: ${address} Observações: ${getValues('observacoes')}`, "_black")
+📦 *Pedido*:  
+${cart.map(item => `- ${item.quantity}x ${item.name} . . . (${priceToBrl(item.price)})`).join('\n')} 
+
+💵 *Total do pedido*: ${total}
+🕒 *Horário*: ${new Date().toLocaleTimeString()}
+✋ *Observações*: ${getValues('observacoes')}
+📍 *Endereço de entrega*: ${address}`;
+
+    const encodedMessage = encodeURIComponent(message)
+
+    console.log(encodedMessage)
+
+    window.open(`https://api.whatsapp.com/send/?phone=${phone}&text=${encodedMessage}`, "_black")
 
     setStep(0)
     clearCart()
@@ -109,7 +117,7 @@ if (cart.length === 0) {
             </div>
             <div className={styles.cartEmpty}>
                 <strong>Ops! seu carrinho está vázio</strong>
-                <p>Adicione deliciosos pasteis ao seu carrinho!😊</p>
+                <p>Adicione deliciosos pastéis ao seu carrinho!😊</p>
             </div>
         </div>
     )

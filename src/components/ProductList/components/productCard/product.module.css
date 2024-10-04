@@ -13,8 +13,8 @@
 
 .imageContainer {
     position: relative;
-    min-width: 200px;
-    min-height: 200px;
+    min-width: 216px;
+    min-height: 160px;
     border-radius: 4px;
     transition: 300ms;
     overflow: hidden;
@@ -153,12 +153,18 @@
 @media (max-width: 1280px) {
     .name {
         font-size: 25px;
+        letter-spacing: 3px;
     }
 }
 
 @media (max-width: 640px) {
     .contentContainer {
         flex-direction: column;
+    }
+
+    .imageContainer {
+        width: 278px;
+        height: 200px;
     }
 }
 
