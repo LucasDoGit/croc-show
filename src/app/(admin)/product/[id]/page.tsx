@@ -1,6 +1,6 @@
 import styles from './products.module.css'
 import { Container } from "@/components/Container";
-import { Header } from "@/components/Headerr";
+import { Header } from "@/components/Header";
 import { db } from "@/services/firebaseConnection";
 import { ProductProps } from "@/utils/types/Product";
 import { doc, getDoc } from "firebase/firestore";

@@ -3,7 +3,7 @@ import { Container } from "@/components/Container";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Cart } from "@/components/Cart";
-import { Header } from "@/components/Headerr";
+import { Header } from "@/components/Header";
 import { ProductList } from '@/components/ProductList';
 import { ProductProps, CategoriesProps } from "@/utils/types/Product";
 

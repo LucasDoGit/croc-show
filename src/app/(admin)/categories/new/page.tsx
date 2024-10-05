@@ -11,7 +11,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/Input'
 import Link from 'next/link';
-import { Header } from '@/components/Headerr';
+import { Header } from '@/components/Header';
 import toast from 'react-hot-toast';
 
 const newCategorySchame = z.object({
