@@ -1,5 +1,4 @@
 import styles from './page.module.css'
-
 import { Container } from "@/components/Container";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -15,18 +14,32 @@ export interface DataProps {
 
 async function getData() {
   try {
-    const productsData = await fetch(`${process.env.NEXT_API_URL}/api/products`, {next: {revalidate: 60}});
+    // if (typeof window === 'undefined') {
+    //   console.log("Skipping fetch during build time.");
+    //   return [];
+    // }
+
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+
+    const productsData = await fetch(`${baseUrl}/api/products`, {next: {revalidate: 60}});
       
     return productsData.json()
   } catch (error) {
     console.log(error);
-    throw new Error("Failed to fetch data categories");
+    throw new Error("Failed to fetch products data");
   }
 };
 
 async function getCategories(){
   try {
-    const categories = await fetch(`${process.env.NEXT_API_URL}/api/categories`, {next: { revalidate: 320 }});
+    // if (typeof window === 'undefined') {
+    //   console.log("Skipping fetch during build time.");
+    //   return [];
+    // }
+
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+
+    const categories = await fetch(`${baseUrl}/api/categories`, {next: { revalidate: 320 }});
       
     return categories.json()
   } catch (error) {

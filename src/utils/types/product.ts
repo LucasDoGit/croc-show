@@ -1,5 +1,3 @@
-import { z } from "zod";
-
 export interface ProductProps {
     id: string,
     name: string,
@@ -16,6 +14,7 @@ export interface CartProps {
     quantity: number;
     total: number;
     description: string;
+    categoryId: string;
     image: string
 }
 

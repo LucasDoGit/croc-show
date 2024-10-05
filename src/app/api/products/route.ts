@@ -1,63 +1,24 @@
-import { db } from "@/services/firebaseConnection";
+import { fetchCategories, fetchProducts } from "@/utils/functions/firebaseFunctions";
 import { CategoriesProps, ProductProps } from "@/utils/types/Product";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { NextResponse } from "next/server";
 
-
-export async function fetchProducts(): Promise<ProductProps[]> {
-    try {
-        const productsRef = collection(db, 'products');
-        const q = query(productsRef, orderBy('name', 'asc'))
-        const snapshot = await getDocs(q)
-        let listProduct: ProductProps[] = [];
-
-        snapshot.forEach(doc => {
-            listProduct.push({
-                id: doc.id,
-                name: doc.data().name,
-                description:  doc.data().description,
-                categoryId:  doc.data().categoryId,
-                price:  parseFloat(doc.data().price),
-                image:  doc.data().imageUrl,
-            })
-        })
-
-        return listProduct;
-    } catch (error) {
-        console.log('Erro ao buscar produtos', error)
-        return []
-    }
-}
-
-export async function fetchCategories(): Promise<CategoriesProps[]> {
-    const categoriesRef = collection(db, 'categories');
-    const q = query(categoriesRef, orderBy('name', 'asc'))
-    const snapshot = await getDocs(q)
-    let listCategories: CategoriesProps[] = [];
-
-    snapshot.forEach(doc => {
-        listCategories.push({
-            id: doc.id,
-            name: doc.data().name,
-            created: doc.data().created,
-        })
-    })
-
-    return listCategories
-}
+type GroupedProducts = {
+    category: string;
+    products: ProductProps[];
+}[];
 
 export async function GET(){
     try {
         const [products, categories] = await Promise.all([fetchProducts(), fetchCategories()]);
 
-        const groupedProducts = categories.map((category) => {
+        const groupedProducts: GroupedProducts = categories.map((category: CategoriesProps) => {
             return {
             category: category.name,
-            products: products.filter((product) => product.categoryId === category.id),
+            products: products.filter((product: ProductProps) => product.categoryId === category.id),
             };
         });
 
-        return NextResponse.json(groupedProducts)
+        return NextResponse.json(groupedProducts, { headers: { 'Cache-Control': 's-maxage=60, stale-while-revalidate' } });
     } catch (error) {
         console.log("Erro ao buscar produtos", error)
         return NextResponse.json({ error: 'Erro ao buscar produtos' }, { status: 500 })
