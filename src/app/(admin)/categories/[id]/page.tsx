@@ -1,7 +1,7 @@
 import styles from './category.module.css'
 import Link from "next/link";
 import { Container } from "@/components/Container";
-import { Header } from "@/components/Header";
+import { Header } from "@/components/Headerr";
 import { CategoryForm } from './components/CategoryForm';
 import { CategoriesProps } from "@/utils/types/Product";
 import { FaLessThan } from "react-icons/fa";

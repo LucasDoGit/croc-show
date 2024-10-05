@@ -1,7 +1,7 @@
 import { Container } from '@/components/Container'
 import styles from './newproduct.module.css'
 import { FaLessThan } from 'react-icons/fa'
-import { Header } from '@/components/Header'
+import { Header } from '@/components/Headerr'
 import Link from 'next/link'
 import { ProductForm } from '../components/productForm'
 
