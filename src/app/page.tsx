@@ -14,14 +14,7 @@ export interface DataProps {
 
 async function getData() {
   try {
-    // if (typeof window === 'undefined') {
-    //   console.log("Skipping fetch during build time.");
-    //   return [];
-    // }
-
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-
-    const productsData = await fetch(`${baseUrl}/api/products`, {next: {revalidate: 60}});
+    const productsData = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products`, {next: {revalidate: 60}});
       
     return productsData.json()
   } catch (error) {
@@ -32,14 +25,7 @@ async function getData() {
 
 async function getCategories(){
   try {
-    // if (typeof window === 'undefined') {
-    //   console.log("Skipping fetch during build time.");
-    //   return [];
-    // }
-
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-
-    const categories = await fetch(`${baseUrl}/api/categories`, {next: { revalidate: 320 }});
+    const categories = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/categories`, {next: { revalidate: 320 }});
       
     return categories.json()
   } catch (error) {
