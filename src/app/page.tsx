@@ -10,6 +10,8 @@ import { db } from '@/services/firebaseConnection';
 import { collection, query, orderBy, getDocs } from 'firebase/firestore';
 import { convertDateFirebase } from '@/utils/functions/product';
 
+export const revalidate = 60;
+
 interface DataProps {
   category: string;
   products: ProductProps[];
