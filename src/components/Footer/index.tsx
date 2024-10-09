@@ -41,7 +41,7 @@ export function Footer() {
                     </a>
                 </div>
                 <div className={styles.contato}>
-                    <p>CNJP: 73.687.477/0001-60</p>
+                    <p>CNJP: 57.576.695/0001-71</p>
                 </div>
             </div>
             <div className={styles.developer}>

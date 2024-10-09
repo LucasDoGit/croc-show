@@ -6,37 +6,80 @@ import { Cart } from "@/components/Cart";
 import { Header } from "@/components/Header";
 import { ProductList } from '@/components/ProductList';
 import { ProductProps, CategoriesProps } from "@/utils/types/Product";
+import { db } from '@/services/firebaseConnection';
+import { collection, query, orderBy, getDocs } from 'firebase/firestore';
+import { convertDateFirebase } from '@/utils/functions/product';
 
-export interface DataProps {
+interface DataProps {
   category: string;
   products: ProductProps[];
 }
 
-async function getData() {
+async function getProductsFromFirebase() {
   try {
-    const productsData = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products`, {next: {revalidate: 60}});
-      
-    return productsData.json()
+    const productsRef = collection(db, 'products');
+    const q = query(productsRef, orderBy('name', 'asc'))
+    const snapshot = await getDocs(q)
+    let listProduct: ProductProps[] = [];
+
+    snapshot.forEach(doc => {
+        listProduct.push({
+            id: doc.id,
+            name: doc.data().name,
+            description:  doc.data().description,
+            categoryId:  doc.data().categoryId,
+            price:  parseFloat(doc.data().price),
+            image:  doc.data().imageUrl,
+        })
+    })
+
+    return listProduct;
   } catch (error) {
     console.log(error);
     throw new Error("Failed to fetch products data");
   }
 };
 
-async function getCategories(){
+async function getCategoriesFromFirebase(){
   try {
-    const categories = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/categories`, {next: { revalidate: 320 }});
-      
-    return categories.json()
+    const categoriesRef = collection(db, 'categories');
+    const q = query(categoriesRef, orderBy('name', 'asc'))
+    const snapshot = await getDocs(q)
+    let listCategories: CategoriesProps[] = [];
+
+    snapshot.forEach(doc => {
+        listCategories.push({
+            id: doc.id,
+            name: doc.data().name,
+            created: convertDateFirebase(doc.data().created),
+        })
+    })
+
+    return listCategories
   } catch (error) {
     console.log(error);
-    throw new Error("Failed to fetch data categories");
+    throw new Error("Failed to fetch categories");
   }
 }
 
 export default async function Home() {
-  const data: DataProps[] = await getData();
-  const categories: CategoriesProps[] = await getCategories();
+  const products: ProductProps[] = await getProductsFromFirebase();
+  const categories: CategoriesProps[] = await getCategoriesFromFirebase();
+
+  if(categories.length === 0){
+    return(
+      <div>
+        <h1>Ainda não possuímos produtos cadastrados, entre novamente mais tarde!</h1>
+      </div>
+    )
+  }
+
+  const data: DataProps[] = categories.map((category) => {
+    return {
+      category: category.name,
+      products: products.filter((product) => product.categoryId === category.id),
+      };
+  });
 
   return (
     <div>
