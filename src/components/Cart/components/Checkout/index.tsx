@@ -81,7 +81,7 @@ export function Checkout({ onClose }: CheckoutProps) {
 function checkoutOrder() {
 
     // 🍽️ *Cliente*: ${orderDetails.customerName}  
-    const phone = "41996546683"
+    const phone = "41998473283"
     const message = 
     `📢 *Novo Pedido Recebido!* 📢
 

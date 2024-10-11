@@ -33,7 +33,7 @@ export function Footer() {
                         <FaSquareInstagram size={38} color="#FFB700" />
                     </a>
                     <a
-                        href="https://api.whatsapp.com/send/?phone=41996546683&text&type=phone_number&app_absent=0"
+                        href="https://api.whatsapp.com/send/?phone=41998473283&text&type=phone_number&app_absent=0"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
