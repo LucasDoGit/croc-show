@@ -135,14 +135,14 @@ return (
             </button>
         </div>
 
-
-
         {step === 0 && (
-            <div className={styles.listProducts}>
+            <div>
 
-                {cart.map((item) => (
-                        <CartItem key={item.id} data={item} />
-                ))}
+                <div className={styles.listProducts}>
+                    {cart.map((item) => (
+                            <CartItem key={item.id} data={item} />
+                    ))}
+                </div>
 
                 <div className={styles.valueTotal}>
                     <p>Total: <strong>{total}</strong></p>
@@ -223,7 +223,7 @@ return (
                         <label>Complementos</label>
                         <Input
                             type='text'
-                            placeholder='Complementos'
+                            placeholder='Bloco x, Apt xx'
                             name='complemento'
                             register={register}
                         />
@@ -258,15 +258,20 @@ return (
         {step === 2 && (
             <div className={styles.orderContainer}>
                 <h2>Confirme o seu pedido:</h2>
+                <strong>(Você será redirecionado para o Whatsapp)</strong>
                 <hr />
-                {cart.map((item) => (
-                    <div
-                        className={styles.orderItem}
-                        key={item.id}
-                    >
-                        <p>{`x${item.quantity} ${item.name} (${priceToBrl(item.price)}) - ${priceToBrl(item.total)}`}</p>
-                    </div>
-                ))}
+
+                <div className={styles.orderItemContainer}>
+                    {cart.map((item) => (
+                            <div
+                                className={styles.orderItem}
+                                key={item.id}
+                                >
+                                <p>{`x${item.quantity} ${item.name} (${priceToBrl(item.price)}) - ${priceToBrl(item.total)}`}</p>
+                            </div>
+                    ))}
+                </div>
+
                 <hr />
                 <div className={styles.orderInfo}>
                     <p><strong>Endereço de entrega: </strong>{address}</p>

@@ -19,6 +19,10 @@ export function OperatingHours() {
 
   const bgColor = isOpen ? '#54CC0A' : '#f34e26';
 
+  console.log('horário do cliente: ', currentHour);
+  console.log('operação:', openingTime)
+  console.log('fechamento:', closingTime)
+
   return (
     <span className={styles.openingHours} style={{backgroundColor: `${bgColor}`}}>{operatingDaysText} - {openingTime}:00 as {closingTime}:00</span>
   );
