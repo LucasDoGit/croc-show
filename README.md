@@ -1,7 +1,5 @@
 <div style="display: flex; flex-direction: column; text-align: center;">
-    <img style="margin: auto;" width="152" alt="EverShop Logo" src="https://firebasestorage.googleapis.com/v0/b/croc-show.appspot.com/o/logo%2Fv1%2FCROCSHOW%20-%20LOGO%20V1_Prancheta%201.png?alt=media&token=044492e2-b953-4731-b3db-08ea90dbe833" />
-    <!-- 1405x425 -->
-    <h1>Croc Show</h1>
+    <h1>Croc Show - Cardápio Online</h1>
     <img style="max-width: 1024px; margin: auto;" src="https://firebasestorage.googleapis.com/v0/b/croc-show.appspot.com/o/github%2Fcapa-github.png?alt=media&token=292c5ec8-9e23-49ec-899d-a5ba041f9759" alt="preview do site">
     <a style="text-decoration: none; text-transform: uppercase; font-size: 14px;" href="https://www.crocshow.com.br">www.crocshow.com.br</a>
 </div>
@@ -47,43 +45,43 @@ Croc Show é uma plataforma de cardápio online com recursos essenciais de comé
 
 ### Home
 
-<img src="https://firebasestorage.googleapis.com/v0/b/croc-show.appspot.com/o/github%2Fhome.png?alt=media&token=223747b6-c533-4874-8d21-a432c0bf73dc" alt="Home" width="300" />
+<img src="https://firebasestorage.googleapis.com/v0/b/croc-show.appspot.com/o/github%2Fhome.png?alt=media&token=223747b6-c533-4874-8d21-a432c0bf73dc" alt="Home" width="520" />
 
 ### Produtos
 
-<img src="https://firebasestorage.googleapis.com/v0/b/croc-show.appspot.com/o/github%2Fprodutos.png?alt=media&token=eedb4c32-4502-4de4-883a-703e5af52a6c" alt="Lista de produtos" width="300" />
+<img src="https://firebasestorage.googleapis.com/v0/b/croc-show.appspot.com/o/github%2Fprodutos.png?alt=media&token=eedb4c32-4502-4de4-883a-703e5af52a6c" alt="Lista de produtos" width="520" />
 
 ### Carrinho revisando pedido
 
-<img src="https://firebasestorage.googleapis.com/v0/b/croc-show.appspot.com/o/github%2Fmodal-carrinho.png?alt=media&token=51684e37-b1e3-4e88-8efa-428d36d4292b" alt="Abrindo o modal do carrinho" width="300" />
+<img src="https://firebasestorage.googleapis.com/v0/b/croc-show.appspot.com/o/github%2Fmodal-carrinho.png?alt=media&token=51684e37-b1e3-4e88-8efa-428d36d4292b" alt="Abrindo o modal do carrinho" width="520" />
 
 ### Carrinho adicionando endereço
 
-<img src="https://firebasestorage.googleapis.com/v0/b/croc-show.appspot.com/o/github%2Fmodal-endereco.png?alt=media&token=65b714bb-2680-4ed4-ae27-03e95a1e24cb" alt="Adicionando o endereço para entrega" width="300" />
+<img src="https://firebasestorage.googleapis.com/v0/b/croc-show.appspot.com/o/github%2Fmodal-endereco.png?alt=media&token=65b714bb-2680-4ed4-ae27-03e95a1e24cb" alt="Adicionando o endereço para entrega" width="520" />
 
 ### Carrinho fazendo checkout
 
-<img src="https://firebasestorage.googleapis.com/v0/b/croc-show.appspot.com/o/github%2Fmodal-checkout.png?alt=media&token=97dfb125-bdcc-4fb0-9f5f-a707a1f189b9" alt="Fazendo o checkout do pedido para whatsapp" width="300" />
+<img src="https://firebasestorage.googleapis.com/v0/b/croc-show.appspot.com/o/github%2Fmodal-checkout.png?alt=media&token=97dfb125-bdcc-4fb0-9f5f-a707a1f189b9" alt="Fazendo o checkout do pedido para whatsapp" width="520" />
 
 ### Pedido no Whatsapp
 
-<img src="https://firebasestorage.googleapis.com/v0/b/croc-show.appspot.com/o/github%2Fpedido-whatsapp.jpg?alt=media&token=6a2ebba2-5a36-4246-b6f3-29801c5a2758" alt="Visualização do pedido recebido no whatsapp" height="400" />
+<img src="https://firebasestorage.googleapis.com/v0/b/croc-show.appspot.com/o/github%2Fpedido-whatsapp.jpg?alt=media&token=6a2ebba2-5a36-4246-b6f3-29801c5a2758" alt="Visualização do pedido recebido no whatsapp" height="420" />
 
 ### Login Administrador
 
-<img src="https://firebasestorage.googleapis.com/v0/b/croc-show.appspot.com/o/github%2Flogin-adm.png?alt=media&token=4ba71435-906e-45d9-a098-41c7050d1e0d" alt="Tela de login do administrador" width="300" />
+<img src="https://firebasestorage.googleapis.com/v0/b/croc-show.appspot.com/o/github%2Flogin-adm.png?alt=media&token=4ba71435-906e-45d9-a098-41c7050d1e0d" alt="Tela de login do administrador" width="520" />
 
 ### Home Administração
 
-<img src="https://firebasestorage.googleapis.com/v0/b/croc-show.appspot.com/o/github%2Fhome-adm.png?alt=media&token=f36d23f0-b9a2-4fc4-bfea-a786240e2832" alt="Home com login de administrador" width="300" />
+<img src="https://firebasestorage.googleapis.com/v0/b/croc-show.appspot.com/o/github%2Fhome-adm.png?alt=media&token=f36d23f0-b9a2-4fc4-bfea-a786240e2832" alt="Home com login de administrador" width="520" />
 
 ### Cadastro de Produtos
 
-<img src="https://firebasestorage.googleapis.com/v0/b/croc-show.appspot.com/o/github%2Fcadastro-cadastro.png?alt=media&token=593720bd-876a-4e8a-a766-6f27a4f06dca" alt="Cadastrando produtos" width="300" />
+<img src="https://firebasestorage.googleapis.com/v0/b/croc-show.appspot.com/o/github%2Fcadastro-cadastro.png?alt=media&token=593720bd-876a-4e8a-a766-6f27a4f06dca" alt="Cadastrando produtos" width="520" />
 
 ### Exclusão de Produtos
 
-<img src="https://firebasestorage.googleapis.com/v0/b/croc-show.appspot.com/o/github%2Fexclusao-produto.png?alt=media&token=6b0b8881-7569-4b08-b1c0-334ca255624b" alt="Excluindo produtos" width="300" />
+<img src="https://firebasestorage.googleapis.com/v0/b/croc-show.appspot.com/o/github%2Fexclusao-produto.png?alt=media&token=6b0b8881-7569-4b08-b1c0-334ca255624b" alt="Excluindo produtos" width="520" />
 
 ## Como Executar o Projeto
 
