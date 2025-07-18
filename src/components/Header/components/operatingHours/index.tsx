@@ -1,29 +1,36 @@
 "use client"
+import { useEffect, useState } from 'react';
 import styles from './operatinghours.module.css'
 
 export function OperatingHours() {
-  const currentHour = new Date().getHours();
-  const currentDay = new Date().getDay();
-  
-  let openingTime = 20;
-  let closingTime = 1;
-  let operatingDaysText = "Seg á Sex";
+    const [openingTime, setOpeningTime] = useState("20");
+    const [closingTime, setClosingTime] = useState("00");
+    const [operatingDaysText, setOperatingDaysText] = useState("Seg á Sex");
+    const [isOpen, setIsOpen] = useState(false);
 
-  if(currentDay === 0 || currentDay === 6){
-    openingTime = 11
-    closingTime = 22
-    operatingDaysText = "Sab e Dom";
-  }
+    useEffect(() => {
+        const currentHour = new Date().getHours();
+        const currentDay = new Date().getDay();
+        const isOpen = (currentHour >= Number(openingTime) && currentHour < 24) || (currentHour >= 0 && currentHour < Number(closingTime));
+        setIsOpen(isOpen)
 
-  const isOpen = (currentHour >= openingTime && currentHour < 24) || (currentHour >= 0 && currentHour < closingTime);
+        if (currentDay === 0) {
+          setIsOpen(false)
+        } else if (currentDay === 6){
+          setOpeningTime("16")
+          setClosingTime("22")
+          setOperatingDaysText("Sábado")
+        }
+    }, [])
 
-  const bgColor = isOpen ? '#54CC0A' : '#f34e26';
-
-  console.log('horário do cliente: ', currentHour);
-  console.log('operação:', openingTime)
-  console.log('fechamento:', closingTime)
-
-  return (
-    <span className={styles.openingHours} style={{backgroundColor: `${bgColor}`}}>{operatingDaysText} - {openingTime}:00 as {closingTime}:00</span>
-  );
+    return (
+        <span
+          className={styles.openingHours}
+          style={{ 
+              backgroundColor: isOpen ? "#32CD32" : "#FF0000", 
+              fontWeight: 500,
+          }}>
+            {operatingDaysText} - {openingTime}:00 as {closingTime}:00
+        </span>
+    );
 };
