@@ -58,9 +58,8 @@ async function getCategoriesFromFirebase(){
     })
 
     return listCategories
-  } catch (error) {
-    console.log(error);
-    throw new Error("Failed to fetch categories");
+  } catch (error: any) {
+    throw new Error("Failed to fetch categories", error);
   }
 }
 

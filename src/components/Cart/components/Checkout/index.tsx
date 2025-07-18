@@ -1,6 +1,6 @@
 "use client"
 import styles from './checkout.module.css'
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 
 import { CartItem } from '../CartItem';
@@ -58,32 +58,32 @@ export function Checkout({ onClose }: CheckoutProps) {
     }
 
     async function handleCepCodeChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const cep = e.target.value;
+        const cep = e.target.value;
 
-    if (cep.length === 8) {
-        toast.promise(
-            fetchCep(cep).then((data: DataProps) => {
-                if (data) {
-                    setValue("logradouro", data.logradouro || "");
-                    setValue("bairro", data.bairro || "");
-                    setValue("localidade", data.localidade || "");
+        if (cep.length === 8) {
+            toast.promise(
+                fetchCep(cep).then((data: DataProps) => {
+                    if (data) {
+                        setValue("logradouro", data.logradouro || "");
+                        setValue("bairro", data.bairro || "");
+                        setValue("localidade", data.localidade || "");
+                    }
+                }),
+                {
+                    loading: "Buscando CEP",
+                    success: "Endereço encontrado",
+                    error: "CEP não encontrado"
                 }
-            }),
-            {
-                loading: "Buscando CEP",
-                success: "Endereço encontrado",
-                error: "CEP não encontrado"
-            }
-        )
+            )
+        }
     }
-}
 
-function checkoutOrder() {
+    function checkoutOrder() {
 
-    // 🍽️ *Cliente*: ${orderDetails.customerName}  
-    const phone = "41998473283"
-    const message = 
-    `📢 *Novo Pedido Recebido!* 📢
+        // 🍽️ *Cliente*: ${orderDetails.customerName}  
+        const phone = "41998473283"
+        const message =
+            `📢 *Novo Pedido Recebido!* 📢
 
 📦 *Pedido*:  
 ${cart.map(item => `- ${item.quantity}x ${item.name} . . . (${priceToBrl(item.price)})`).join('\n')} 
@@ -91,23 +91,41 @@ ${cart.map(item => `- ${item.quantity}x ${item.name} . . . (${priceToBrl(item.pr
 💵 *Total do pedido*: ${total}
 🕒 *Horário*: ${new Date().toLocaleTimeString()}
 ✋ *Observações*: ${getValues('observacoes')}
-📍 *Endereço de entrega*: ${address}`;
+📍 *Endereço de entrega*: ${address}
+🧐 *Complemento*: ${getValues('complemento')}`;
 
-    const encodedMessage = encodeURIComponent(message)
+        const encodedMessage = encodeURIComponent(message)
 
-    console.log(encodedMessage)
+        window.open(`https://api.whatsapp.com/send/?phone=${phone}&text=${encodedMessage}`, "_black")
 
-    window.open(`https://api.whatsapp.com/send/?phone=${phone}&text=${encodedMessage}`, "_black")
+        setStep(0)
+        clearCart()
+        onClose()
+    }
 
-    setStep(0)
-    clearCart()
-    onClose()
-}
+    if (cart.length === 0) {
+        return (
+            <div className={styles.modal}>
+                <div className={styles.header}>
+                    <button
+                        className={styles.btnCloseModal}
+                        onClick={onClose}
+                    >
+                        <IoClose size={28} color="#000" />
+                    </button>
+                </div>
+                <div className={styles.cartEmpty}>
+                    <strong>Ops! seu carrinho está vázio</strong>
+                    <p>Adicione deliciosos pastéis ao seu carrinho!😊</p>
+                </div>
+            </div>
+        )
+    }
 
-if (cart.length === 0) {
     return (
         <div className={styles.modal}>
             <div className={styles.header}>
+                <h1>Meu carrinho</h1>
                 <button
                     className={styles.btnCloseModal}
                     onClick={onClose}
@@ -115,187 +133,169 @@ if (cart.length === 0) {
                     <IoClose size={28} color="#000" />
                 </button>
             </div>
-            <div className={styles.cartEmpty}>
-                <strong>Ops! seu carrinho está vázio</strong>
-                <p>Adicione deliciosos pastéis ao seu carrinho!😊</p>
-            </div>
-        </div>
-    )
-}
 
-return (
-    <div className={styles.modal}>
-        <div className={styles.header}>
-            <h1>Meu carrinho</h1>
-            <button
-                className={styles.btnCloseModal}
-                onClick={onClose}
-            >
-                <IoClose size={28} color="#000" />
-            </button>
-        </div>
+            {step === 0 && (
+                <div>
 
-        {step === 0 && (
-            <div>
-
-                <div className={styles.listProducts}>
-                    {cart.map((item) => (
+                    <div className={styles.listProducts}>
+                        {cart.map((item) => (
                             <CartItem key={item.id} data={item} />
-                    ))}
-                </div>
-
-                <div className={styles.valueTotal}>
-                    <p>Total: <strong>{total}</strong></p>
-                </div>
-
-                <div className={styles.btnListProducts}>
-                    <button
-                        className={styles.buttonNext}
-                        onClick={() => setStep(1)}
-                    >
-                        Avançar
-                    </button>
-                </div>
-                
-            </div>
-        )}
-
-        {step === 1 && (
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className={styles.formContainer}>
-                    <div className={styles.inputContainer}>
-                        <label>Digite seu CEP:</label>
-                        <Input
-                            type='text'
-                            placeholder='Digite seu CEP'
-                            name='cep'
-                            error={errors.cep?.message}
-                            register={register}
-                            onBlur={handleCepCodeChange}
-                            maxLength={8}
-                        />
+                        ))}
                     </div>
-                    <div className={styles.groupInput_2}>
+
+                    <div className={styles.valueTotal}>
+                        <p>Total: <strong>{total}</strong></p>
+                    </div>
+
+                    <div className={styles.btnListProducts}>
+                        <button
+                            className={styles.buttonNext}
+                            onClick={() => setStep(1)}
+                        >
+                            Avançar
+                        </button>
+                    </div>
+
+                </div>
+            )}
+
+            {step === 1 && (
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className={styles.formContainer}>
                         <div className={styles.inputContainer}>
-                            <label>Rua/Logradouro</label>
+                            <label>Digite seu CEP:</label>
                             <Input
                                 type='text'
-                                placeholder='Digite a rua'
-                                name='logradouro'
-                                error={errors.logradouro?.message}
+                                placeholder='Digite seu CEP'
+                                name='cep'
+                                error={errors.cep?.message}
+                                register={register}
+                                onBlur={handleCepCodeChange}
+                                maxLength={8}
+                            />
+                        </div>
+                        <div className={styles.groupInput_2}>
+                            <div className={styles.inputContainer}>
+                                <label>Rua/Logradouro</label>
+                                <Input
+                                    type='text'
+                                    placeholder='Digite a rua'
+                                    name='logradouro'
+                                    error={errors.logradouro?.message}
+                                    register={register}
+                                />
+                            </div>
+                            <div className={styles.inputContainer}>
+                                <label>Número</label>
+                                <Input
+                                    type='text'
+                                    placeholder='Digite o número'
+                                    name='numero'
+                                    error={errors.numero?.message}
+                                    register={register}
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.groupInput}>
+                            <div className={styles.inputContainer}>
+                                <label>Cidade</label>
+                                <Input
+                                    type='text'
+                                    placeholder='Digite a cidade'
+                                    name='localidade'
+                                    error={errors.localidade?.message}
+                                    register={register}
+                                />
+                            </div>
+                            <div className={styles.inputContainer}>
+                                <label>Bairro</label>
+                                <Input
+                                    type='text'
+                                    placeholder='Digite o bairro'
+                                    name='bairro'
+                                    error={errors.bairro?.message}
+                                    register={register}
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.inputContainer}>
+                            <label>Complementos</label>
+                            <Input
+                                type='text'
+                                placeholder='Bloco x, Apt xx'
+                                name='complemento'
                                 register={register}
                             />
                         </div>
                         <div className={styles.inputContainer}>
-                            <label>Número</label>
-                            <Input
-                                type='text'
-                                placeholder='Digite o número'
-                                name='numero'
-                                error={errors.numero?.message}
-                                register={register}
+                            <label>Observações do Pedido</label>
+                            <textarea
+                                placeholder="Tirar cebola..."
+                                {...register('observacoes')}
                             />
                         </div>
                     </div>
-                    <div className={styles.groupInput}>
-                        <div className={styles.inputContainer}>
-                            <label>Cidade</label>
-                            <Input
-                                type='text'
-                                placeholder='Digite a cidade'
-                                name='localidade'
-                                error={errors.localidade?.message}
-                                register={register}
-                            />
-                        </div>
-                        <div className={styles.inputContainer}>
-                            <label>Bairro</label>
-                            <Input
-                                type='text'
-                                placeholder='Digite o bairro'
-                                name='bairro'
-                                error={errors.bairro?.message}
-                                register={register}
-                            />
-                        </div>
+                    <div className={styles.containerButtons}>
+                        <button
+                            type='button'
+                            onClick={() => setStep(0)}
+                            className={styles.buttonPrev}
+                        >
+                            Voltar
+                        </button>
+                        <button
+                            type='submit'
+                            className={styles.buttonNext}
+                        >
+                            Avançar
+                        </button>
                     </div>
-                    <div className={styles.inputContainer}>
-                        <label>Complementos</label>
-                        <Input
-                            type='text'
-                            placeholder='Bloco x, Apt xx'
-                            name='complemento'
-                            register={register}
-                        />
-                    </div>
-                    <div className={styles.inputContainer}>
-                        <label>Observações do Pedido</label>
-                        <textarea
-                            placeholder="Tirar cebola..."
-                            {...register('observacoes')}
-                        />
-                    </div>
-                </div>
-                <div className={styles.containerButtons}>
-                    <button
-                        type='button'
-                        onClick={() => setStep(0)}
-                        className={styles.buttonPrev}
-                    >
-                        Voltar
-                    </button>
-                    <button
-                        type='submit'
-                        className={styles.buttonNext}
-                    >
-                        Avançar
-                    </button>
-                </div>
-            </form>
-        )}
+                </form>
+            )}
 
 
-        {step === 2 && (
-            <div className={styles.orderContainer}>
-                <h2>Confirme o seu pedido:</h2>
-                <strong>(Você será redirecionado para o Whatsapp)</strong>
-                <hr />
+            {step === 2 && (
+                <div className={styles.orderContainer}>
+                    <h2>Confirme o seu pedido:</h2>
+                    <strong>(Você será redirecionado para o Whatsapp)</strong>
+                    <hr />
 
-                <div className={styles.orderItemContainer}>
-                    {cart.map((item) => (
+                    <div className={styles.orderItemContainer}>
+                        {cart.map((item) => (
                             <div
                                 className={styles.orderItem}
                                 key={item.id}
-                                >
+                            >
                                 <p>{`x${item.quantity} ${item.name} (${priceToBrl(item.price)}) - ${priceToBrl(item.total)}`}</p>
                             </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
 
-                <hr />
-                <div className={styles.orderInfo}>
-                    <p><strong>Endereço de entrega: </strong>{address}</p>
-                    <p><strong>Observações: </strong>{getValues('observacoes')}</p>
+                    <hr />
+                    <div className={styles.orderInfo}>
+                        <p><strong>Endereço de entrega: </strong>{address}</p>
+                        <p><strong>Complemento: </strong>{getValues("complemento")}</p>
+                        <p><strong>Observações: </strong>{getValues('observacoes')}</p>
+                    </div>
+                    <div className={styles.valueTotal}>
+                        <p>Total: <strong>{total}</strong></p>
+                    </div>
+                    <div className={styles.containerButtons}>
+                        <button
+                            onClick={() => setStep(1)}
+                            className={styles.buttonPrev}
+                        >
+                            Voltar
+                        </button>
+                        <button
+                            onClick={checkoutOrder}
+                            className={styles.buttonNext}
+                        >
+                            Avançar
+                        </button>
+                    </div>
                 </div>
-                <div className={styles.valueTotal}>
-                    <p>Total: <strong>{total}</strong></p>
-                </div>
-                <div className={styles.containerButtons}>
-                    <button
-                        onClick={() => setStep(1)}
-                        className={styles.buttonPrev}
-                    >
-                        Voltar
-                    </button>
-                    <button
-                        onClick={checkoutOrder}
-                        className={styles.buttonNext}
-                    >
-                        Avançar
-                    </button>
-                </div>
-            </div>
-        )}
-    </div>
-)
+            )}
+        </div>
+    )
 }
